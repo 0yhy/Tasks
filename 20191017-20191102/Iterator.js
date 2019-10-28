@@ -4,11 +4,11 @@ var it = array[Symbol.iterator]();
 
 /* 数组的遍历 */
 for(let item of [1, 2, 3, 4, 5]) {
-    console.log(item);
+  console.log(item);
 }
 /* 字符串的遍历 */
 for(let c of "zabcde") {
-    console.log(c);
+  console.log(c);
 }
 /* map的遍历 */
 var map = new Map();

@@ -12,7 +12,7 @@ console.log(sayName(person), sayAge(person))  //Shaw 19
 
 function createFunctions() {
   var result = new Array();
-  for(var i = 0; i < 10; i++) {
+  for(let i = 0; i < 10; i++) {
     result[i] = function() {
       return i;
     }
@@ -22,11 +22,11 @@ function createFunctions() {
 for(let i = 0; i < 10; i++) {
   console.log(createFunctions()[i]());
 }
-
+// 10 10 10 10 10 10 10 10 10 10 
 function createFunction() {
   let result = new Array();
   for(var j = 0; j < 10; j++) {
-    result [j] = function(num) {
+    result[j] = function(num) {
       return function() {
         return num;
       };
@@ -35,5 +35,6 @@ function createFunction() {
   return result;
 }
 for(let i = 0; i < 10; i++) {
-  console.log(createFunctions()[i]());
+  console.log(createFunction()[i]());
 }
+// 0 1 2 3 4 5 6 7 8 9 

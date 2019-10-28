@@ -130,6 +130,10 @@ promise.then(function(value) {
 
 两个函数接收的参数均为`Promise`对象**传出的值**
 
+其中，第二个函数是可选的
+
+
+
 
 
 ## Iterator和for...of循环
