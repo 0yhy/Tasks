@@ -1,10 +1,9 @@
-var array = [{"1": "Shaun"}, {"2": "Shaw"}, {"3": "Harry"}, {"4": "Lucy"}];
-
-var it = array[Symbol.iterator]();
-
 /* 数组的遍历 */
 for(let item of [1, 2, 3, 4, 5]) {
   console.log(item);
+}
+for(let index in [1, 2, 3, 4, 5]) {
+  console.log(index);
 }
 /* 字符串的遍历 */
 for(let c of "zabcde") {
@@ -42,3 +41,7 @@ const arrayLink = { length: 2, 0: "zero", 1: "one"};
 for (let item of Array.from(arrayLink)) {
   console.log(item);
 }
+
+let myString = "hi";
+let iteratorString = myString[Symbol.iterator]();
+console.log(iteratorString.next());

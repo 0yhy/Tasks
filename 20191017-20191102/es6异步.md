@@ -109,7 +109,25 @@ const promise = new Promise(function(resolve, reject) {
 
 * `resolve`：
   * 将`Promise`对象状态由`pending`变为`fulfilled`
+  
   * 将异步操作的结果**作为参数传出** 
+  
+  * `resolve`函数的参数还可能是一个`promise`实例
+  
+    ```javascript
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log(new Date());
+        reject(new Error("p1 failed!!"));
+      }, 2000);
+    });
+    
+    const p2 = new Promise((resolve, reject) => {
+      setTimeout(() => resolve(p1), 4000);
+    });
+    ```
+  
+    此时，`p1`的状态决定着`p2`的状态
 * `reject`：
   * 将`Promise`对象状态由`pending`变为`rejected`
   * 将异步操作的报错**作为参数传出**
@@ -134,7 +152,158 @@ promise.then(function(value) {
 
 
 
+### `Promise.prototype.then()`
 
+`then`方法：为`Promise`实例添加状态改变时的回调函数
+
+`then`方法返回的是一个新的`Promise`实例（不是原来的实例），因此可以采用链式写法
+
+### `Promise.prototype.catch()`
+
+* 该方法是`.then(null, reject)`或`then(undefined, reject)`的别名，用于指定发生错误时的回调函数
+
+* 无论是异步操作发生的错误还是`then`方法指定的回调函数抛出的错误，都会被`catch`方法捕获
+
+* 如果没有使用`catch`方法指定错误处理的回调函数，`Promise`对象抛出的错误**不会传递到外层代码**，也就是`Promise`会“吃掉错误”
+
+* `Node`有一个`unhandelRejection`事件，专门监听未捕获的`reject`错误
+
+* ```JavaScript
+  const promise = new Promise(function (resolve, reject) {
+    resolve('ok');
+    setTimeout(function () { throw new Error('test') }, 0)
+  });
+  promise.then(function (value) { console.log(value) });
+  ```
+
+  上述代码再`Promise`运行结束后抛出了一个错误，即是在`Promise`函数体外抛出的，因此会冒泡到最外层被捕获
+
+* `catch`方法返回的也是一个`promise`对象
+
+
+
+### `Promise.prototype.finally()`
+
+不管`promise`最后的状态是什么，在执行完`then`或者是`catch`回调函数以后，都会执行`finally`方法指定的回调函数
+
+<!--测了一下，好像在promise状态凝固了以后finally就直接执行了，-->
+
+`finally`方法的回调函数**不接受任何参数**，这意味着没有办法知道，前面的 Promise 状态到底是`fulfilled`还是`rejected`。这表明，`finally`方法里面的操作，应该是与状态无关的，不依赖于 Promise 的执行结果。
+
+`finally`本质上是`then`方法的特例。
+
+### `Promise.protoype.all()`
+
+用于将多个`Promise`实例包装成一个新的`Promise`实例
+
+```javascript
+const p = Promise.all([p1, p2, p3]);
+```
+
+* 参数：
+
+  * 有`Iterator`接口
+  * 返回的每个成员都是`Promise`实例
+
+* 新实例的状态
+
+  * 当所有成员的状态变成`fulfilled`，新实例的状态也会变成`fulfilled`，此时将所有成员的返回值组成一个数组传给新实例的回调函数
+  * 当有一个成员的状态为`rejected`，新实例的状态就变成`rejected`，第一个被`reject`的实例的返回值会被传给新实例的回调函数
+
+* 关于`catch`
+
+   如果作为参数的 Promise 实例，自己定义了`catch`方法，那么它一旦被`rejected`，并不会触发`Promise.all()`的`catch`方法。 
+
+  ```JavaScript
+  const p1 = new Promise((resolve, reject) => {
+    resolve('hello');
+  })
+  .then(result => result)
+  .catch(e => e);
+  
+  const p2 = new Promise((resolve, reject) => {
+    throw new Error('报错了');
+  })
+  .then(result => result)
+  .catch(e => e);
+  
+  Promise.all([p1, p2])
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
+  // ["hello", Error: 报错了]
+  ```
+
+  上面代码中，`p1`会`resolved`，`p2`首先会`rejected`，但是`p2`有自己的`catch`方法，该方法返回的是一个新的 Promise 实例，`p2`指向的实际上是这个实例。该实例执行完`catch`方法后，也会变成`resolved`，导致`Promise.all()`方法参数里面的两个实例都会`resolved`，因此会调用`then`方法指定的回调函数，而不会调用`catch`方法指定的回调函数。
+
+  如果`p2`没有自己的`catch`方法，就会调用`Promise.all()`的`catch`方法。
+
+### `Promise.race()`
+
+用于将多个`Promise`实例包装成一个新的`Promise`实例
+
+与`all()`不同的是，只要有一个实例的状态改变了，新实例的状态就会随之改变
+
+接收参数：第一个改变的实例的返回值会被传给`p`的回调函数
+
+### `Promise.allSettled()`
+
+用于将多个`promise`实例包装成一个新的`Promise`实例
+
+当所有的参数实例都返回结果后（无论成功还是失败），新实例才会结束
+
+新实例一旦结束，状态只会是`fulfilled`，不会变成`rejected`
+
+接收参数：
+
+### `Promise.any()`
+
+用于将多个`promise`实例包装成一个新的`Promise`实例
+
+ 只要参数实例有一个变成`fulfilled`状态，包装实例就会变成`fulfilled`状态；如果所有参数实例都变成`rejected`状态，包装实例就会变成`rejected`状态。 
+
+### `Promise.resolve()`
+
+用于将对象转为`Promise`对象
+
+* `Promise`实例
+
+  调用该函数将原封不动地返回实例
+
+* `thenable`对象
+
+  一个具有`then`方法的对象
+
+  * 将对象转成`Promise`对象
+  * 立刻执行该对象的`then`方法
+
+* 不具有`then`方法的对象/不是对象
+
+  * 返回一个新的`Promise`对象
+  * 新对象状态为`resolved`
+  * 参数传给回调函数
+
+* 无参数
+
+  * 直接返回一个状态为`resolved`的`Promise`对象
+
+### `Promise.reject()`
+
+`Promise.reject(reason)`方法也会返回一个新的 Promise 实例，该实例的状态为`rejected`。
+
+```javascript
+const p = Promise.reject('出错了');
+// 等同于
+const p = new Promise((resolve, reject) => reject('出错了'))
+
+p.then(null, function (s) {
+  console.log(s)
+});
+// 出错了
+```
+
+上面代码生成一个 Promise 对象的实例`p`，状态为`rejected`，回调函数会立即执行。
+
+注意，`Promise.reject()`方法的参数，会原封不动地作为`reject`的理由，变成后续方法的参数。这一点与`Promise.resolve`方法不一致。
 
 ## Iterator和for...of循环
 
@@ -216,4 +385,25 @@ promise.then(function(value) {
   }
   ```
 
+## async函数
 
+即用`async`替换`Generator`函数的`*`，用`await`替换`yield`
+
+* 内置执行器
+* 语义清晰
+* 适用性更广
+  * 在`co`模块中约定`yield`命令后面只能是`Thunk`函数或`Promise`对象
+  * `await`命令后可以是`Promise`对象与原始类型的值
+* 返回值为`Promise`
+
+### 注意事项
+
+* `await`后的`Promise`结果可能是`rejected`，会导致整个`async`函数终端执行。因此最好将`await`命令放在`try...catch`代码块中
+
+* 多个`await`命令后的异步操作，如果不存在继发关系，最好让他们同时触发
+
+  ```javascript
+  let [foo, bar] = await Promise.all([getFoo(), getBar()]);
+  ```
+
+  

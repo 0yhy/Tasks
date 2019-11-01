@@ -1,10 +1,24 @@
-function closure(propertyName) {
-  return function(obj) {                      //定义并返回了一个闭包，也是一个匿名函数
-    return obj[propertyName];   
-  };
-};
+function* objEntries() {
+  let keys = Object.keys(this);
+  for(let key of keys) {
+    yield [key, this[key]];
+  }
+}
 
-let person = {name: "Shaw", age: 19};
-let sayName = closure("name");
-let sayAge = closure("age");
-console.log(sayName(person), sayAge(person))  //Shaw 19
+function Person(name, age, job) {
+  this.name = name;
+  this.age = age;
+  this.job = job;
+}
+Person.prototype.sayName = function() {
+  console.log(this.name);
+}
+
+let person1 = new Person("Shaw", 19, "student");
+let person2 = new Person("Shaun", 19, "student");
+
+person1[Symbol.iterator] = objEntries;
+
+for(let [key, value] of person1) {
+  console.log(`${key}: ${value}`);
+}
