@@ -31,7 +31,7 @@ let support = {
             resolve时传回Response对象  
  */
 
-function fetch (input, init) {
+function fetch(input, init) {
   return new Promise((resolve, reject) => {
     let request = new Request(input, init);
 
@@ -101,7 +101,7 @@ function fetch (input, init) {
     Headers对象可使用for...of结构（这意味着部署了遍历器接口）
 */
 
-function Headers (headers) {
+function Headers(headers) {
   this.list = {};
 
   if (headers instanceof Headers) {
@@ -158,22 +158,22 @@ Headers.prototype.values = function* () {
   }
 };
 
-var header = new Headers();
-header.append("name", "Shaw");
-console.log(header);
-header.delete("name");
-console.log(header);
-header.append("name", "Shaw");
-header.append("age", "19");
-header.append("name", "Shaun");
-console.log(header);
-for (let [name, value] of header) {
-  console.log(name, value);
-}
-console.log(header.get("name"));
+// var header = new Headers();
+// header.append("name", "Shaw");
+// console.log(header);
+// header.delete("name");
+// console.log(header);
+// header.append("name", "Shaw");
+// header.append("age", "19");
+// header.append("name", "Shaun");
+// console.log(header);
+// for (let [name, value] of header) {
+//   console.log(name, value);
+// }
+// console.log(header.get("name"));
 
-var newHeader = new Headers(header);
-console.log(newHeader);
+// var newHeader = new Headers(header);
+// console.log(newHeader);
 
 
 /*
@@ -186,7 +186,7 @@ console.log(newHeader);
       一个Boolean 值指示是否body已经被标记读取。
  */
 //body是否读取过
-function consumed (body) {
+function consumed(body) {
   if (body.bodyUsed) {
     return new Promise((resolve, reject) => {
       reject(new TypeError("Already read"));
@@ -195,33 +195,32 @@ function consumed (body) {
   body.bodyUsed = true;
 }
 
-function Body () {
-  this.bodyUsed = false
+function Body() {
+  this.bodyUsed = false;
 
   this._initBody = function (body) {
     // 把最原始的数据存下来
-    this._bodyInit = body
+    this._bodyInit = body;
     // 判断body数据类型，然后存下来
     if (!body) {
-      this._bodyText = ''
+      this._bodyText = "";
     }
-    else if (typeof body === 'string') {
-      this._bodyText = body
+    else if (typeof body === "string") {
+      this._bodyText = body;
     }
     else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
-      this._bodyBlob = body
+      this._bodyBlob = body;
     }
     else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
-      this._bodyFormData = body
+      this._bodyFormData = body;
     }
     else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-      this._bodyText = body.toString()   //数据格式是这样的 a=1&b=2&c=3
+      this._bodyText = body.toString();   //数据格式是这样的 a=1&b=2&c=3
     }
     else if (support.arrayBuffer && support.blob && isDataView(body)) {
       // ArrayBuffer一般是通过DataView或者各种Float32Array,Uint8Array来操作的
       // 如果是DataView， DataView的数据是存在 DataView.buffer上的
       this._bodyArrayBuffer = bufferClone(body.buffer)  // 复制ArrayBuffer
-      // IE 10-11 can't handle a DataView body.
       this._bodyInit = new Blob([this._bodyArrayBuffer]) // 重新设置_bodyInt
     }
     else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
@@ -252,30 +251,30 @@ function Body () {
       //标记为已经使用
       var rejected = consumed(this)
       if (rejected) {
-        return rejected
+        return rejected;
       }
 
       // resolve，进入then
       if (this._bodyBlob) {
-        return Promise.resolve(this._bodyBlob)
+        return Promise.resolve(this._bodyBlob);
       }
       else if (this._bodyArrayBuffer) {
-        return Promise.resolve(new Blob([this._bodyArrayBuffer]))
+        return Promise.resolve(new Blob([this._bodyArrayBuffer]));
       }
       else if (this._bodyFormData) {
-        throw new Error('could not read FormData body as blob')
+        throw new Error('could not read FormData body as blob');
       }
       else {
-        return Promise.resolve(new Blob([this._bodyText]))
+        return Promise.resolve(new Blob([this._bodyText]));
       }
     }
     // 使用 fetch(...).then(res=>res.arrayBuffer())
     this.arrayBuffer = function () {
       if (this._bodyArrayBuffer) {
-        return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
+        return consumed(this) || Promise.resolve(this._bodyArrayBuffer);
       }
       else {
-        return this.blob().then(readBlobAsArrayBuffer) //如果有blob，读取成ArrayBuffer
+        return this.blob().then(readBlobAsArrayBuffer); //如果有blob，读取成ArrayBuffer
       }
     }
   }
@@ -284,34 +283,36 @@ function Body () {
   this.text = function () {
     var rejected = consumed(this)
     if (rejected) {
-      return rejected
+      return rejected;
     }
 
     if (this._bodyBlob) {
-      return readBlobAsText(this._bodyBlob)
+      return readBlobAsText(this._bodyBlob);
     }
     else if (this._bodyArrayBuffer) {
-      return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer))
-    } else if (this._bodyFormData) {
-      throw new Error('could not read FormData body as text')
-    } else {
-      return Promise.resolve(this._bodyText)
+      return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));
+    }
+    else if (this._bodyFormData) {
+      throw new Error('could not read FormData body as text');
+    }
+    else {
+      return Promise.resolve(this._bodyText);
     }
   }
 
   // 使用 fetch(...).then(res=>res.formData())
   if (support.formData) {
     this.formData = function () {
-      return this.text().then(decode)
+      return this.text().then(decode);
     }
   }
 
   // 使用 fetch(...).then(res=>res.json())
   this.json = function () {
-    return this.text().then(JSON.parse)
+    return this.text().then(JSON.parse);
   }
 
-  return this
+  return this;
 }
 
 
@@ -324,7 +325,7 @@ function Body () {
   RequestInit:包含要应用于任何请求的任何自定义设置的选项对象
 
 */
-function Request (input, RequestInit) {
+function Request(input, RequestInit) {
   RequestInit = RequestInit || {};
   let body = RequestInit.body;
   //如果 input 是一个 Request 对象：
@@ -368,11 +369,11 @@ Request.prototype.clone = function () {
 }
 
 /*
-------------------------------Request----------------------------------
+------------------------------Response----------------------------------
 
 */
 
-function Response (bodyInit, ResponseInit) {
+function Response(bodyInit, ResponseInit) {
   if (!ResponseInit) {
     ResponseInit = {};
   }
@@ -412,4 +413,3 @@ Response.redirect = function (url, status) {
 
   return new Response(null, { status: status, headers: { location: url } });
 }
-

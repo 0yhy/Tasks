@@ -1,5 +1,5 @@
 console.log(new Date(), "Start")
-function timeout(ms) {
+function timeout (ms) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve();
@@ -7,8 +7,8 @@ function timeout(ms) {
   });
 };
 
-async function asyncPrint(value, ms) {
-  await(timeout(ms));
+async function asyncPrint (value, ms) {
+  await (timeout(ms));
   console.log(new Date(), value);
 }
 
