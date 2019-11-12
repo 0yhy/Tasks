@@ -1414,3 +1414,616 @@ function assignHandler() {
 
 
 
+## 8. BOM
+
+### 8.1 window对象
+
+* 在全局作用域中声明的函数、变量都会变成`window`的方法和属性
+
+* 全局变量不能通过`delete`操作符删除，但直接在`window`对象上定义的属性可以
+
+* 尝试访问未声明的变d量会抛出错误
+
+  ```javascript
+  console.log(a);
+  //Uncaught ReferenceError: a is not defined
+  ```
+
+  查询`window`对象可判断某个变量是否存在
+
+  ```javascript
+  console.log(window.a);
+  //undefined
+  ```
+
+  
+
+#### 窗口位置
+
+* 获取窗口相对于屏幕左边/上面的位置
+
+  ```javascript
+  var leftPos = (typeof window.screenLeft === "number" ? window.screenLeft : window.screenX);
+  var topPos = (typeof window.screenTop === "number" ? window.screenTop : window.screenY);
+  ```
+
+  IE、Safari、Opera、Chrome都提供了`screenLeft`与`screenTop`属性，分别表示窗口相对于屏幕左边和上面的位置。在Firefox中，对应这两个属性的属性为`screenX`，`screenY`
+
+  在Safari、Chrome中，`screenX`和`screenY`与`screenLeft`、`screenTop`对应
+
+  在Opera中，`screenX`和`screenY`**并不与**`screenLeft`、`screenTop`对应
+
+  
+
+
+#### 窗口大小
+
+（以下结果均为我测试结果）
+
+|             | Chrome          | Firefox | Opera                     | Safari | IE   |
+| ----------- | --------------- | ------- | ------------------------- | ------ | ---- |
+| innerWidth  | 1920            | 1920    | 1880（opera左侧有菜单栏） | 1920   |      |
+| innerHeight | 937             | 947     | 939                       | 957    |      |
+| outerWidth  | 1920            | 1936    | 1920                      | 1936   |      |
+| outerHeight | 1040            | 1056    | 1040                      | 1056   |      |
+|             | inner：视口大小 |         | inner：视口大小           |        |      |
+|             | outer：窗口大小 |         | outer：窗口大小           |        |      |
+
+<!--" outer这个以后你写项目千万不要用 这东西贼坑"--兔子如是说-->
+
+改变窗口大小的方法
+
+`resizeTo()`
+
+`resizeBy()`
+
+这两个方法经常被浏览器禁用
+
+
+
+#### 导航和打开窗口
+
+`window.open()`
+
+* 导航到特定的URL
+* 打开一个新的浏览器窗口
+
+参数
+
+* URL
+* 窗口/框架名
+* 字符串，表示新窗口的特性
+
+返回值
+
+* 新窗口的引用
+
+  与`window`对象大致相似，但我们可以对其进行更多的控制，如调整窗口大小、移动位置等
+
+
+
+`window.close()`
+
+* 可以使用该方法关闭**通过`window.open()`方法**打开的窗口
+
+* 窗口被关闭后，引用依然存在，但只能用于检测窗口是否已经被关闭
+
+  ```javascript
+  win.close();
+  alert(win.closed);//true
+  ```
+
+  
+
+`window.opener`属性
+
+被`open`方法打开的窗口有一个属性为`window.opener`，保存着打开该窗口的原始窗口
+
+
+
+大多数浏览器都内置弹出窗口屏蔽程序。此时，`window.open()`会返回`null`
+
+我们可以通过检测这个值是否为`null`来确认弹出窗口是否被屏蔽
+
+
+
+#### 间歇调用和超时调用
+
+* 超时调用：`setTimout()`
+  * 返回值：数值ID，表示超时调用，是计划执行代码的唯一标识符
+  * 可以用过`clearTimeout(timeoutID)`来取消超时调用，其中参数为超时调用的返回值超时调用ID
+* 间歇调用：`setInterval()`
+  * 返回值：数值ID，表示超时调用，是计划执行代码的唯一标识符
+  * 可以用过`clearInterval(intervalID)`来取消超时调用，其中参数为超时调用的返回值超时调用ID
+
+
+
+#### 系统对话框
+
+* `alert()`
+
+* `confirm()`
+
+  * 返回值为`true`或者`false`，前者表示用户点击了ok，后者表示点击了cancel
+
+* `prompt()`
+
+  * 参数
+
+    * 文本提示
+    * 文本输入域默认值（可选）
+
+  * 返回值
+
+    * 确定：返回文本输入域的值
+    * 取消：返回`null`
+
+    
+
+### 8.2 location对象
+
+* 提供了与当前窗口中加载的文档有关的信息
+* 既是`window`对象的属性，也是`document`对象的属性
+* 将URL解析为独立的片段
+
+#### 位置操作
+
+* `location.assign()`方法：
+
+  打开新的url并在浏览器的历史纪录中生成一条记录
+
+  等同于直接修改`window.location`属性或`location.href`属性
+
+* 可以修改`location`的其他属性（`search`、`hostname`、`pathname`、`port`等）来修改url；
+
+  （注意：除`hash`外，修改其他的属性，都会重新加载页面）
+
+  修改上述属性均会在浏览器的历史记录中生成一条新的记录
+
+* `location.replace()`方法
+
+  打开新的url，但**不会在历史记录中生成记录**
+
+* `window.reload()`方法
+
+  参数：
+
+  * 空：最有效的方式重新加载页面（如果页面自上次请求以后未改变，则从浏览器缓存中加载）
+  * `true`：强制从服务器重新加载页面
+
+
+
+### 8.3 navigator对象
+
+识别浏览器客户端的事实标准
+
+#### 检测插件
+
+`navigator.plugins`数组（IE无效）
+
+该数组中的每个元素包含以下属性
+
+* `name`：插件名
+* `description`：插件描述
+* `filename`：插件的文件名
+* `length`：插件所处理的MIME类型数量
+
+
+
+### 8.4 screen对象
+
+包含浏览器窗口外部的显示器的信息
+
+没什么用
+
+
+
+### 8.5 history对象
+
+* `history.go()`
+
+  每个浏览器窗口、标签页乃至每个框架都有自己的`history`对象
+
+  在用户的历史记录中任意跳转
+
+  参数：
+
+  * 可以是一个整数：表示前进/后退
+  * 可以是一个字符串：会跳转到浏览器历史记录中包含该字符串**最近的**位置
+
+* `history.back()`：后退
+
+* `history.forward()`：前进
+
+* `history.length`：保存着历史记录数量的属性
+
+
+
+## 9. 客户端检测
+
+### 9.1 能力检测
+
+**能力检测不是浏览器检测**
+
+在实际开发中，应将能力检测作为下一步解决方案的依据，而不是用它来判断用户使用的浏览器是什么
+
+### 9.2 怪癖检测
+
+用于**识别浏览器的特殊行为**，也就是浏览器的bug
+
+### 9.3 用户代理检测
+
+通过检测**用户代理字符串**来检测实际使用的浏览器
+
+* 在服务器端：这种做法常用且被广为接受
+* 在客户端：这种做法是一种万不得已的做法，优先级在能力检测/怪癖检测之后
+
+#### 用户代理字符串检测技术
+
+##### **识别浏览器不如识别它使用的引擎**
+
+* 五大呈现引擎
+  * IE
+  * Gecko
+  * WebKit
+  * KHTML
+  * Opera
+
+```JavaScript
+let client = function () {
+  let engine = {
+    ie: 0,
+    gecko: 0,
+    webkit: 0,
+    khtml: 0,
+    opera: 0,
+    ver: null    //版本号
+  };
+
+  return {
+    engine: engine
+  };
+};
+```
+
+如果检测到了哪个呈现引擎，就**以浮点数的形式将该引擎的版本号写入相应的属性**。由于是浮点数值，因此有可能丢失某些版本信息（如`1.8.1`传入`parseFloat()`后会得到数值`1.8`）。
+
+为了解决上述问题，我们将呈现引擎的**完整版本**写入`ver`属性
+
+这样的区分可以支持如下代码：
+
+```JavaScript
+if (client.engine.ie) {//如果是IE
+  //针对IE的代码
+}
+else if (client.engine.gecko > 1.5) {
+  if (client.engine.ver === "1.8.1") {
+  }
+}
+```
+
+##### 检测顺序是关键
+
+* 第一步：识别Opera
+
+  因为Opera的用户代理字符串会模仿其他浏览器，而其它浏览器的用户代理字符串不会将自己标识为Opera
+
+* 第二步：识别WebKit
+
+  WebKit的用户代理字符串中包含“Gecko”与“KHTML”
+
+  但WebKit用户代理字符串中的“AppleWebKit”是独一无二的
+
+* 第三步：识别KHTML
+
+  KHTML的用户代理字符串中包含“Gecko”
+
+* 第四步：识别Gecko
+
+  Gecko的版本号出现在字符串“rv:“的后面
+
+
+
+
+
+## 10. DOM
+
+### 10.1 节点层次
+
+#### Node类型
+
+* `nodeType`
+  * 每个节点都有该属性，用于表明节点类型
+  * 节点类型的值共有12个数值常量
+* `nodeName`
+* `nodeValue`
+
+##### 节点关系
+
+* `childNodes`
+  * 每个节点都有该属性，其中保存着一个`NodeList`对象
+  * 访问方法：
+    * 方括号访问：`someNode.childNodes[0]`
+    * `item()`访问：`someNode.childNodes.item(1)`
+* `parentNode`
+  * 每个节点都有该属性，指向文档树中的父节点
+* `previousSibling`、`nextSibling`
+  * `childNodes`列表中的每个节点都是同胞节点
+  * 同胞节点之间可以通过上述属性访问
+* `firstChild`、`lastChild`
+* `ownerDocument`
+  * 指向表示整个文档的文档节点
+* `hasChildNodes()`方法
+  * 在节点包含一个/多个子节点的情况下返回`true`
+
+##### 操作节点
+
+* `appendChild()`方法
+  * 在`childNodes`列表后加一个节点
+  * 返回值：新增的节点
+  * 如果传入方法中的节点已经是文档的一部分了，那么该方法将该节点从原位置移动到新位置
+* `insertBefore()`方法
+  * 将节点插入指定位置
+  * 参数：
+    * 待插入的节点
+    * 作为参照的节点
+  * 返回值：被插入的节点
+* `replaceChild()`
+  * 替换节点
+  * 参数：
+    * 新节点
+    * 待替换节点
+  * 返回值：新节点
+  * 被替换下的节点仍属于文档所有
+* `removeChild()`
+  * 移除节点
+  * 参数：待移除节点
+  * 返回值：被移除节点
+  * 被替换下的节点仍属于文档所有
+* `cloneChild()`
+  * 每个节点都有的方法
+  * 参数为接收一个布尔值
+    * `true`：深复制；复制节点以及其整个子节点树
+    * `false`：浅复制；只复制节点本身，复制后返回的节点属于文档所有，但是没有为其指定父节点
+
+* `normalize()`
+  * 处理文档树中的文本节点
+    * 删除空文本节点
+    * 连接相邻的文本节点
+
+
+
+#### Document类型
+
+`Document`类型中最常见的是作为`HTMLDocument`实例的`document`对象
+
+`document`对象同时也是浏览器`window`对象的属性
+
+##### 文档的子节点
+
+* `html Element`
+
+  访问`html`元素的快捷方式
+
+  * `document.documentElement`
+  * `document.firstChild`
+  * `document.childNodes[0]`
+
+  另外，`document`对象还有一个`body`属性直接指向`<body>`元素
+
+* `DocumentType`
+
+  可以通过`document.doctype`来访问
+
+  由于浏览器对该属性的支持不一致，因此这个属性的用处很有限
+
+* 注释
+
+  由于浏览器对位于`<html>`元素外部的注释处理不一致，因此这些注释也没有什么用处
+
+##### 文档信息
+
+* `title`
+
+网页请求
+
+* `URL`
+* `domain`
+* `referrer`
+
+上述属性只有`domain`是可以设置的
+
+`domain`的设置只能将域名由**松散的（loose）设置为紧绷的（tight）**，不能将该属性设置成URL中不包含的域
+
+##### 查找元素
+
+* `document.getElementById()`
+
+* `document.getElementsByTagName()`
+
+  * 返回值：`NodeList`
+
+  * 在HTML文档中，该方法返回`HTMLCollection`对象，与`NodeList`非常类似。`HTMLCollection`有如下方法：
+
+    * `namedItem()`
+
+      ```html
+      <img src="" name="myImage">
+      ```
+
+      ```javascript
+      var images = document.getElementsByTagName("img");
+      
+      var myImage = images.namedItem("myImage");
+      var myImage = images["myImage"];//方括号语法访问 后台调用namedItem方法
+      ```
+
+      当多个元素的`name`值相同时，取第一项
+
+* `document.getElementsByName()`
+
+  返回值：`NodeList`，带有给定`name`特性的所有元素
+
+##### 特殊集合
+
+* `document.anchors`
+* `document.forms`
+* `document.images`
+* `document.links`
+
+##### DOM一致性检测
+
+`document.implementation.hasFeature(要检测的DOM功能名称,版本号)`
+
+##### 文档写入
+
+* `write()`
+* `writeln()`
+* `open()`
+* `close()`
+
+在文档加载结束后调用`write()`方法，输出的内容将重写整个页面
+
+直接包含`</script>`字符串会导致该字符串被解释为脚本快的结束。解决该问题需要**进行转义**`<\/script>`
+
+#### Element类型
+
+* 访问元素标签名
+
+  * `someNode.nodeName`
+  * `someNode.tagName`
+
+  上述返回值均为**大写**。在HTML中，标签名始终都以全部大写表示；在XML中，标签名与源代码保持一致
+
+##### HTML元素
+
+所有的HTML元素都由`HTMLElement`类型表示。`HTMLElement`类型直接继承自`Element`类型并添加了一些属性
+
+属性：
+
+* `id`
+* `title`
+* `className`
+* `dir`：语言方向，使用较少
+* `lang`：元素内容的语言代码，使用较少
+
+<!--注意区分 属性 和 特性-->
+
+##### 获取特性
+
+`getAttribute()`
+
+* 参数为实际特性名。如`div.getAttribute("class")`
+
+* 不存在返回`null`
+* 不区分大小写
+
+特殊特性：
+
+* `style`
+* `onclick`这样的事件处理程序
+
+
+
+##### 设置特性
+
+`setAttribute()`
+
+* 参数为要设置的特性名和值
+* 这样设置的特性名会被统一转换成小写
+
+`removeAttribute()`
+
+彻底删除元素特性
+
+
+
+##### attributes属性
+
+`Element`类型是唯一使用`attributes`元素的DOM节点类型
+
+元素的每一个特性都由一个`Attr`节点表示，每个节点保存在`NamedNodeMap`对象中
+
+`NamedNodeMap`对象的方法：
+
+* `getNamedItem(name)`
+
+  获取名称为`name`的特性的节点
+
+  也可以使用方括号语法访问：`element.attributes["id"]`
+
+  修改特性的值：`element.attributes["id"].nodeValue = "hello"`
+
+* `removeNamedItem(name)`
+
+  与`removeAttribute()`效果相同
+
+  但返回值为被删除特性的`Attr`节点
+
+* `setNamedItem(node)`
+
+* `item(pos)`
+
+  
+
+一般来说，`attributes`上述方法不够方便。我们可以用其来遍历元素的特性
+
+##### 创建元素
+
+`document.createElement()`
+
+##### 元素的子节点
+
+元素也支持`getElementsByTagName()`方法，返回当前元素所有符合条件的子元素
+
+
+
+
+
+#### Text类型
+
+* 特点
+  * 没有子节点
+  * `parentNode`为元素节点
+  * `nodeName`为`#text`
+  * `nodeValue`为文本内容
+* 方法
+  * `appendData(text)`
+  * `deleteData(offset, count)`
+  * `insertData(offset, text)`
+  * `replaceData(offset, count, text)`
+  * `splitText(offset)`
+  * `substringData(offset, count)`
+* 属性
+  * `length`，表示节点中字符数目
+  * `data`，表示文本内容
+  * 值与`nodeValue.length`、`data.length`中存的相同
+
+##### 创建文本节点
+
+`document.createTextNode()`
+
+##### 规范化文本节点
+
+在父元素的上调用`normalize()`方法
+
+##### 分割文本节点
+
+`splitText()`，与`normalize()`相反的方法
+
+从指定位置分割`nodeValue`，原来的文本节点包含从开始到指定位置之前的内容；新文本节点包含剩下的文本
+
+* 参数：指定位置值
+
+* 返回值：返回新文本节点
+
+
+
+#### Comment类型
+
+#### CDATASection类型
+
+#### DocumentFragment类型
+
+#### Attr类型
+
