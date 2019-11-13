@@ -1,3 +1,3 @@
-let ul = document.getElementById("hei");
-let items = ul.getElementsByTagName("li");
-console.log(items);
+let myDiv = document.getElementById("div");
+// myDiv.innerText = myDiv.innerText;
+console.log(myDiv.innerText);
