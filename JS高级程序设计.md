@@ -2027,3 +2027,596 @@ else if (client.engine.gecko > 1.5) {
 
 #### Attr类型
 
+属性
+
+* `name`：与`nodeName`的值相同
+* `value`：与`nodeValue`的值相同
+* `specified`：特性是否在代码中被指定
+
+创建新的特性节点
+
+* `document.createAttribute(name)`
+
+  参数：特性名称
+
+其他方法
+
+`setAttributeNode()`
+
+`getAttributeNode()`
+
+
+
+### 10.2 DOM操作技术
+
+#### 动态脚本
+
+#### 动态样式
+
+#### 操作表格
+
+核心DOM方法创建和修改表格都很复杂
+
+因此HTMLDOM为`<table>`、`<tbody>`、`<tr>`元素添加了一些属性和方法
+
+
+
+## 11. DOM扩展
+
+### 11.1 选择符API
+
+Selectors API是由W3C发起制定的一个标准，致力于让浏览器原生支持CSS查询
+
+Selectors API Level1的和新方法是`querySelector()`与`querySelectorAll()`
+
+#### querySelector()
+
+参数：CSS选择符
+
+返回值：
+
+* 有匹配：返回匹配的第一个元素
+* 无匹配：`null`
+
+能够调用该方法的类型：
+
+* Document
+* Element
+* DocumentFragment
+
+#### querySelectorAll()
+
+参数：CSS选择符
+
+返回值：`NodeList`。若无匹配，返回值为空`NodeList`
+
+能够调用该方法的类型：
+
+* Document
+* Element
+* DocumentFragment
+
+#### matchesSelector()
+
+Selectors API Level2规范的方法
+
+参数：CSS选择符
+
+返回值：布尔值，判断调用元素是否与传入的选择符相匹配
+
+
+
+### 11.2 元素遍历
+
+Element Traversal API为DOM元素添加了以下属性
+
+* `childElementCount`
+* `firstElementChild`
+* `lastElementChild`
+* `previousElementSibling`
+* `nextElementSibling`
+
+### 11.3 HTML5
+
+#### 与类相关的补充
+
+##### 1. `getElementsByClassName()`
+
+参数：一个或多个类名的字符串
+
+返回值：`NodeList`
+
+##### 2. `classList`属性
+
+HTML5新增了一种操作类名的方式：为所有的元素添加`classList`属性
+
+该属性是新集合类型`DOMTokenList`的实例
+
+属性：
+
+* `length`
+
+方法：
+
+* `add(value)`
+* `contains(value)`
+* `remove(value)`
+* `toggle(value)`
+
+#### 焦点管理
+
+页面获取焦点的方式：
+
+* 页面加载
+* 用户输入
+
+属性：
+
+* `document.activeElement`
+
+  引用DOM中**当前获得了焦点的元素**
+
+方法：
+
+* `document.hasFocus()`
+
+  用于确认文档是否获取了焦点
+
+#### HTMLDocument的变化
+
+##### `readyState`属性
+
+Document的`readyState`属性有两个可能的值
+
+* `loading`：正在加载文档
+* `complete`：文档加载完成
+
+##### 兼容模式
+
+`compatMode`属性
+
+* `CSS1Compat`：标准模式
+* `BackCompat`：混杂模式
+
+##### `head`属性
+
+作为对`document.body`属性的补充，新增了`document.head`属性
+
+#### 字符集属性
+
+`document.charset`：文档中实际使用的字符集
+
+`document.defaultCharset`：根据默认浏览器及操作系统的设置，当前文档默认的字符集应该是什么
+
+#### 自定义数据属性
+
+`dataset`属性
+
+该属性是`DOMStringMap`的实例。在这个映射中，每个自定义属性都会有一个键值对，但是键没有`data-`前缀
+
+#### 插入标记
+
+##### `innerHTML`属性
+
+* 读模式
+
+  `innerHTML`属性返回与调用元素的所有子节点对应的HTML标记
+
+* 写模式
+
+  根据指定的值创建DOM树，然后用DOM树完全替换原先所有子节点
+
+##### `outerHTML`属性
+
+* 读模式
+
+  返回调用它的元素及所有子节点
+
+* 写模式
+
+  根据指定的值创建DOM树，然后用DOM树完全替换调用元素
+
+##### `insertAdjacentHTML()`方法
+
+##### `scrollIntoView()`方法
+
+
+
+### 11.4 专有扩展
+
+#### 文档模式
+
+#### `children`属性
+
+#### `contains()`方法
+
+#### 插入文本
+
+##### `innerText`
+
+操作元素中包含的所有文本内容
+
+读取值：由浅入深拼接子文档树所有文本
+
+写入值：删除元素所有子节点，插入包含相应文本值的文本节点
+
+* `textContent`
+
+  Firefox不支持`innerText`，但是支持类似的`textContent`属性
+
+  该属性是DOMLevel3规定的属性
+
+##### `outerText`
+
+尽量不要使用
+
+#### 滚动
+
+`scrollIntoViewIfNeeded()`
+
+`scrollByLines()`
+
+`scrollByPages()`
+
+
+
+## 12. DOM2和DOM3
+
+* DOM2级核心
+* DOM2级视图
+* DOM2级事件
+* DOM2级样式
+* DOM2级遍历和范围
+* DOM2级HTML
+
+```javascript
+let supportsDOM2Core = document.implementation.hasFeature("Core", "2.0");
+let supportsDOM3Core = document.implementation.hasFeature("Core", "3.0");
+let supportsDOM2HTML = document.implementation.hasFeature("HTML", "2.0");
+let supportsDOM2Views = document.implementation.hasFeature("Views", "2.0");
+let supportsDOM2XML = document.implementation.hasFeature("XML", "2.0");
+```
+
+### 12.1 针对XML命名空间的变化
+
+### 12.2 样式
+
+### 12.3 遍历
+
+#### `NodeIterator`
+
+#### `TreeWalker`
+
+### 12.4 范围
+
+#### DOM中的范围
+
+`startContainer`
+
+`startOffset`
+
+`endContainer`
+
+`endOffset`
+
+##### 使用DOM实现简单选择
+
+* `selectNode()`
+* `selectNodeContents()`
+* `setStartBefore()`
+* `setStartAfter()`
+* `setEndBefore()`
+* `setEndAfter()`
+
+##### 使用DOM实现复杂选择
+
+* `setStart(refNode, offset)`
+
+  `refNode`会变成`startContainer`
+
+* `setEnd(refNode, offset)`
+
+  `refNode`会变成`endContainer`
+
+##### 操作DOM范围中的内容
+
+* `deleteContents()`
+
+* `extractContents()`
+
+  从文档移除范围选区
+
+  返回值：范围的文档片段（DocumentFragment）
+
+* `cloneContents()`
+
+##### 插入DOM范围中的内容
+
+* `insertNode()`
+
+* `surroundContents()`
+
+  环绕范围插入内容
+
+##### 折叠DOM范围
+
+`collpase()`
+
+参数：
+
+* `true`：折叠到范围起点
+* `false`：折叠刀范围终点
+
+##### 比较DOM范围
+
+`compareBoundaryPoints(比较方式常量值，比较范围)`
+
+比较方式常量值
+
+* `Range.START_TO_START(0)`
+* `Range.START_TO_END(1)`
+* `Range.END_TO_END(2)`
+* `Range.END_TO_START(3)`
+
+返回值：
+
+​	第一个范围中的点在第二个范围中的点
+
+* 之前：`-1`
+* 相等：`0`
+* 之后：`1`
+
+##### 复制DOM范围
+
+`cloneRange()`
+
+##### 清理DOM范围
+
+`detach()`
+
+使用完范围后最好调用该方法，以便从文档中分离出该范围
+
+之后就可以放心地解除对范围的引用，让垃圾回收机制回收其内存
+
+```javascript
+range.detach();
+range = null;
+```
+
+
+
+## 13. 事件
+
+实现`JS`与`HTML`之间的交互
+
+### 13.1 事件流
+
+#### 事件冒泡
+
+从下往上
+
+所有现代浏览器都支持事件冒泡
+
+#### 事件捕获
+
+从上往下
+
+#### DOM事件流
+
+* 事件捕获阶段
+* 处于目标阶段
+* 事件冒泡阶段
+
+
+
+### 13.2 事件处理程序
+
+#### HTML事件处理程序
+
+* `event`
+
+  通过该变量，可以直接访问事件对象
+
+* `this`
+
+  在事件处理函数内部，`this`值等于事件的目标元素
+
+问题：
+
+* 时差问题
+* 处理程序的作用域链在不同浏览器会导致不同结果
+* HTML与Javascript紧密耦合
+
+#### DOM0级事件处理程序
+
+将函数赋值给**事件处理程序属性**
+
+`btn.onclick = function() { alert("clicked") };`
+
+#### DOM2级事件处理程序
+
+* `addEventListener()`
+  * 大多数情况下，我们将事件处理程序添加到事件流的**冒泡阶段**
+* `removeEventListener()`
+  * 通过`addEventListener()`添加的事件处理程序只能通过该方法移除
+  * 通过`addEventListener()`添加的匿名函数无法被移除
+
+参数：
+
+* 事件名
+* 事件处理函数
+* 布尔值
+  * `true`：在捕获阶段调用事件处理程序
+  * `false`：在冒泡阶段调用事件处理程序
+
+优点：
+
+​	可以添加多个事件处理程序
+
+
+
+### 13.3 事件对象
+
+#### DOM中的事件对象
+
+在通过HTML特性指定事件处理程序时，变量`event`中保存着`event`对象
+
+使用DOM0级或DOM2级事件处理程序时，会传入`event`变量
+
+
+
+`target`与`currentTarget`
+
+* `currentTarget`
+
+  与`this`的值相等，为事件处理程序注册的元素
+
+* `target`
+
+  事件真正的目标元素
+
+阻止特定事件的默认行为
+
+* `preventDefault()`
+
+  只有`cancelable`为`true`的事件，才能使用该方法取消默认行为
+
+* `stopPropagation()`
+
+  立即停止事件在DOM层次中的传播（阻止冒泡/捕获）
+
+`eventPhase`属性
+
+确认时间当前位于事件流的哪个阶段
+
+* `1`：捕获阶段
+* `2`：目标对象
+* `3`：冒泡阶段
+
+
+
+### 13.4 事件类型
+
+#### UI事件
+
+不一定与用户操作有关的事件
+
+* `load`
+
+  * 页面完全加载，`window`触发
+
+  * 框架加载完毕，框架集触发
+
+  * 图像加载完毕，`<img>`触发
+
+    > 如果要创建新的`<img>`元素，最重要的是要在**指定`src`属性之间指定事件**
+    >
+    > 只要设置了`src`属性图像就会开始下载（无论其是否被添加到文档）
+
+* `unload`
+  * 页面完全卸载，`window`触发
+  * 框架卸载完毕，框架集触发
+* `abort`
+* `error`
+* `select`
+* `resize`
+* `scroll`
+
+以上事件在DOM2级事件中都被归为HTML事件
+
+
+
+#### 焦点事件
+
+* `blur`
+
+  不会冒泡
+
+* `focus`
+
+  不会冒泡
+
+* `focusin`
+
+  会冒泡
+
+* `focusout`
+
+#### 鼠标与滚轮事件
+
+一些事件的触发顺序
+
+* mousedown
+* mouseup
+* click
+* mousedown
+* mouseup
+* click
+* dbclick
+
+关于鼠标移动事件的区别
+
+* `mouseenter`
+
+* `mouseleave`
+
+  不冒泡，将光标移动到元素后代上不会触发
+
+* `mouseover`
+
+* `mouseout`
+
+  将光标移动到元素后代上也会触发
+
+鼠标滚轮事件
+
+* `mousewheel`
+
+
+
+##### 鼠标按钮
+
+`click`事件只会在主鼠标按钮被单击/回车键被按下时触发
+
+但是中键与次鼠标按钮会触发`mousedown`与`mouseup`事件
+
+在这两个事件的`event`对象中存在一个`button`属性
+
+* `0`：主鼠标按钮
+* `1`：中间鼠标按钮
+* `2`：次鼠标按钮
+
+
+
+#### 键盘与文本事件
+
+* `keydown`
+* `keypress`
+* `keyup`
+
+##### 键码
+
+`event`对象的`keyCode`属性会包含一个代码与键盘上一个特定的键对应
+
+##### 字符编码
+
+`event`对象的`charCode`属性是按下键所代表字符的ASCII码
+
+##### `textInput`事件
+
+`event`对象上的属性
+
+* `data`
+
+  用户输入的字符
+
+* `inputMethod`（只有IE支持）
+
+  表示把文本输入到文本框中的方法
+
+  
+
+#### 复合事件
+
+#### 变动事件
+
