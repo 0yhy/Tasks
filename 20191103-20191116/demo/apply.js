@@ -21,7 +21,7 @@ Function.prototype.APPLY = function (thisArg, argArr) {
   }
   delete thisArg.func
   return result;
-}
+};
 
 
 global.color = "red";
