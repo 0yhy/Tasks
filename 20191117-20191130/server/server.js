@@ -11,13 +11,14 @@ console.log(`Root dir: ${root}`);
 
 let server = http.createServer(function (request, response) {
   let pathname = url.parse(request.url).pathname;
-  console.log("pathname:", pathname);
+  if (pathname === "/") {
+    pathname = "/1.html";
+  }
   //文件的本地文件路径
   let filepath = path.join(root, pathname);
-
   let ext = path.parse(filepath).ext;
   let mimeType = mime.getType(ext) || "";
-  console.log("Type:", mimeType);
+  console.log("Type:", mimeType, filepath);
 
   //处理非文本文件
   if (mimeType && !mimeType.startsWith("text")) {
