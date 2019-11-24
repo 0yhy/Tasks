@@ -19,16 +19,38 @@ let server = http.createServer(function (request, response) {
   let ext = path.parse(filepath).ext;
   let mimeType = mime.getType(ext) || "";
   console.log("Type:", mimeType, filepath);
+  console.log(request.headers);
 
   //处理非文本文件
   if (mimeType && !mimeType.startsWith("text")) {
-    response.writeHead(200, { "Content-Type": mimeType });
-    let stream = fs.createReadStream(filepath);
-    stream.on("error", function () {
-      response.writeHead(500, { "Content-Type": mimeType });
-      response.end("<h1>500 Server Error</h1>");
-    })
-    stream.pipe(response);
+    let range = request.headers.range || "bytes=0-";
+    let positions = range.replace("bytes=", "").split("-");
+    let start = parseInt(positions[0], 10);
+    fs.stat(filepath, function (err, stat) {
+      if (err) {
+        response.end("<h1>404 Not Found</h1>");
+      }
+      else {
+        let total = stat.size;
+        let end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+        let chunkSize = (end - start) + 1;
+        response.writeHead(206, {
+          "Content-Type": mimeType,
+          "Content-Length": chunkSize,
+          "Content-Range": `bytes ${start}-${end}/${total}`,
+          "Accept-Ranges": "bytes"
+        });
+        let stream = fs.createReadStream(filepath, { start: start, end: end })
+          .on("error", function () {
+            response.writeHead(500, { "Content-Type": mimeType });
+            response.end("<h1>500 Server Error</h1>");
+          })
+          .on("open", function () {
+            stream.pipe(response);
+          })
+      }
+    });
+
   }
   //处理文本文件
   else {

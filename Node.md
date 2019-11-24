@@ -350,3 +350,13 @@ console.log("Server is running at http://127.0.0.1:1027");
 参考文章： https://websnippet.io/post/video-streaming-with-nodejs/ 
 
 使用`fs.createReadStream`读取`video`文件可以以`stream`的形式读取视频文件，而不是一次性全部读取完。
+
+为什么不能快进/快退，是因为HTML5 video的`controls`需要设置`Accept-Ranges`才能工作。
+
+`request.headers.range`的格式是这样的：`'bytes=0-'`。我们需要获取到`start`和`end`的数值结果
+
+```
+let range = req.headers.range;
+let positions = range.replace()
+```
+
