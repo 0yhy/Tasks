@@ -3,23 +3,23 @@ const url = require("url");
 const fs = require("fs");
 const http = require("http");
 const mime = require("mime");
-const marked = require("marked");
+const open = require("open");
 
-let root = path.resolve("server/catalog");
+let root = path.resolve("public/catalog");
 
 console.log(`Root dir: ${root}`);
 
 let server = http.createServer(function (request, response) {
   let pathname = url.parse(request.url).pathname;
   if (pathname === "/") {
-    pathname = "/1.html";
+    pathname = "/index.html";
   }
+  console.log(root);
   //文件的本地文件路径
   let filepath = path.join(root, pathname);
   let ext = path.parse(filepath).ext;
   let mimeType = mime.getType(ext) || "";
   console.log("Type:", mimeType, filepath);
-  console.log(request.headers);
 
   //处理非文本文件
   if (mimeType && !mimeType.startsWith("text")) {
@@ -76,9 +76,49 @@ let server = http.createServer(function (request, response) {
       }
     });
   }
-
-
 });
 
-server.listen(1027);
-console.log("Server is running at http://127.0.0.1:1027");
+
+// 处理命令行参数
+let argvs = process.argv;
+let configs = argvs.slice(2);
+let indexPort = true;
+let port = 1027;
+let indexOpen = true;
+let indexDirectory = true;
+console.log("-----------------------------------", argvs);
+if (configs) {
+  for (let i = 0; i < configs.length; ++i) {
+    if (configs[i].startsWith("-")) {
+      let config = configs[i];
+      // 如果端口没有被设置过且出现了-p参数
+      if (indexPort && config === "-p") {
+        // 如果-p后出现了端口号且合法
+        if (Number.isInteger(Number(configs[i + 1])) && configs[i + 1] >= 0 && configs[i + 1] <= 65536) {
+          port = configs[i + 1];
+          server.listen(port);
+          indexPort = false;
+        }
+      }
+      else if (indexOpen && config === "-o") {
+        // 打开窗口必须放在最后 不然如果端口号设定在打开窗口后就会报错
+        indexOpen = false;
+      }
+      else if (indexDirectory && config === "-d") {
+        if (!configs[i + 1].startsWith("-")) {
+          root = `public/${configs[i + 1]}`;
+          indexDirectory = false;
+        }
+      }
+    }
+  }
+}
+if (indexPort) {
+  server.listen(port);
+}
+if (!indexOpen) {
+  open(`http://127.0.0.1:${port}`);
+}
+
+console.log(root);
+console.log(`Server is running at http://127.0.0.1:${port}`);
