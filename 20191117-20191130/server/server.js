@@ -4,6 +4,7 @@ const fs = require("fs");
 const http = require("http");
 const mime = require("mime");
 const open = require("open");
+const marked = require("marked");
 
 let root = path.resolve("public/catalog");
 
@@ -113,6 +114,28 @@ if (configs) {
     }
   }
 }
+
+// 将文件夹中的文件名写入json
+fs.readdir(root, function (err, paths) {
+  if (err) {
+    console.log("read dir failed!");
+  }
+  else {
+    let json = [];
+    paths.forEach(function (path) {
+      json.push({
+        name: path,
+        suffix: path.split(".")[1]
+      })
+    })
+    fs.writeFile(`${root}/paths.json`, JSON.stringify(json), function (err) {
+      if (err) {
+        console.log("write failed!");
+      }
+    })
+  }
+})
+
 if (indexPort) {
   server.listen(port);
 }
