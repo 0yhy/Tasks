@@ -321,9 +321,7 @@ console.log("Server is running at http://127.0.0.1:1027");
 
 在`node`中，我们通过响应对象的`writeHead()`方法来设置**响应状态码**和**响应头部**
 
-## 媒体流：Media Stream
 
- **`MediaStream`** 接口是一个媒体内容的流.。一个流包含几个*轨道*，比如视频和音频轨道。 
 
 ## Demo: 静态资源服务
 
@@ -355,8 +353,97 @@ console.log("Server is running at http://127.0.0.1:1027");
 
 `request.headers.range`的格式是这样的：`'bytes=0-'`。我们需要获取到`start`和`end`的数值结果
 
-```
+```javascript
 let range = req.headers.range;
-let positions = range.replace()
+let positions = range.replace("bytes=", "").split("-");
+let start = parseInt(positions[0], 10);
 ```
+
+后台路由转发 80端口
+
+/data 3000端口 静态服务器
+
+/index 
+
+命令行 封装成http-server
+
+
+
+## cli
+
+### level 1 `npm run`
+
+> 达成效果：`npm run server`
+
+一般我们命令行执行一个脚本，调用的命令是
+
+```javascript
+> node index.js
+```
+
+如果我们在`package.json`的`scripts`字段加上脚本名：
+
+```javascript
+{
+	"scripts": {
+		"server": "node index.js"
+	}
+}
+```
+
+命令行就可以直接调用
+
+```
+> npm run hello
+```
+
+### level 2 起个名字
+
+> 达成效果：`server`
+
+#### windows环境下
+
+1. 在`package.json`中添加以下字段
+
+   ```json
+   "bin": {
+   	"server": "server.js"
+   }
+   ```
+
+2. 在我们的工作文件夹根目录下执行`npm install . -g`
+
+   即可将正在开发的包安装为全局包。同时会在`npm`全局包目录中生成命令行所需要的`cmd`文件
+
+![image-20191125200447956](E:\BingYan\task\imgs\image-20191125200447956.png)
+
+<img src="E:\BingYan\task\imgs\image-20191125200542626.png" alt="image-20191125200542626" style="zoom: 67%;" />
+
+在`node_modules`中会有我们包的快捷方式
+
+<img src="E:\BingYan\task\imgs\image-20191125200644434.png" alt="image-20191125200644434" style="zoom: 80%;" />
+
+这样在命令行中直接执行`server`，服务器就可以跑起来了
+
+#### 其他系统环境下
+
+看了看教程，可以使用`npm link`，更加简单。至于为什么`windows`不行似乎是个历史遗留bug，执行了`npm link`脚本也跑不起来。我用的`windows`，所以这里就不详细写了
+
+
+
+### level 3 命令行参数
+
+命令行上的参数，可以通过`proccess`变量获取。`process`是一个全局变量。我们可以通过它拿到很多信息，包括命令行的输入情况
+
+命令行输入情况保存在`process.argv`这个属性里
+
+![image-20191125201432142](E:\BingYan\task\imgs\image-20191125201432142.png)
+
+我们可以看出，`argv`是个数组，前两位固定
+
+`argv[0]`：`node`程序的路径
+
+`argv[1]`：脚本存放的位置
+
+后面的值为我们输入的命令行参数
 

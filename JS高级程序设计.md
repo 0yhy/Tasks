@@ -1014,6 +1014,31 @@ objSaycolor();	//"blue"
   `String`构造函数**本身**的静态方法，用于接收一/多个字符编码，然后转换成字符串
 
   本质上与实例方法`charCodeAt()`是相反操作
+  
+* 字符串模式匹配
+
+  * `match()`
+
+    参数：为**`RegExp`对象**或**正则表达式字符串**
+
+    返回值：一个数组；第一项为与整个模式匹配的字符串；后面项为与正则表达式中捕获组匹配的字符串
+
+  * `search()`
+
+    参数：为**`RegExp`对象**或**正则表达式字符串**
+
+    返回值：第一个匹配项的索引；无结果返回`-1`
+
+  * `replace()`：替换子字符串
+
+    参数：
+
+    * **`RegExp`对象**或**字符串**（这个字符串不会被转换成正则表达式）
+    * 字符串或函数
+
+    如果第一个参数为字符串，只会替换第一个子字符串
+
+    要想替换所有子字符串，请使用正则表达式并加上`g`
 
 ### 5.7 单体内置对象
 
@@ -1055,7 +1080,7 @@ objSaycolor();	//"blue"
 
 #### 属性类型
 
-* 数据属性
+* 数据属性的特性
 
   * `[[Configurable]]`：
     * 能否通过`delete`删除属性从而重新定义属性；
@@ -1086,13 +1111,19 @@ objSaycolor();	//"blue"
   
   注意：如果使用`Object.defineProperty()`方法创建一个新属性时，`configurable`、`enumerable`与`writable`的默认值均为`false`！！！
 
-* 访问器属性
+* 访问器属性的特性
 
+  访问器属性不包含属性值；它们包含一对儿`getter`和`setter`函数
+  
+`getter`：读取访问器属性
+  
+`setter`：写入访问器属性
+  
   * `[[Configurable]]`
   * `[[Enumerable]]`
-
+  
   > 以上属性对于**直接定义在对象上的属性**，其默认值均为`true`
-
+  
   * `[[Get]]`：在读取属性时调用的函数，默认值为`undefined`
   * `[[Set]]`：在写入属性时调用的函数，默认值为`undefined`
 
@@ -1117,6 +1148,8 @@ Object.defineProperties(book, {
 #### 读取属性的特性
 
 `Object.getOwnPropertyDescriptor(对象，属性名称)`方法
+
+返回值：属性名称
 
 
 
@@ -1193,14 +1226,20 @@ var person2 = new Person("Shaw", 19, "student");
     * `prototype`是指针
     * 该指针指向一个对象
     * 该对象包含**可以由特定类型的所有实例共享的属性和方法**，也叫**原型对象**
+    
   * 每个原型对象都有一个默认的`constructor`属性
     * `constructor`是一个指针
     * 该指针指向`prototype`属性所在的函数
     * 每个原型对象还包括从`Object()`继承过来的方法
+    
   * 每个实例都有一个内部属性`[[prototype]]`
-    * `[[prototype]]`是指针
+  * `[[prototype]]`是指针
     * 该指针指向构造函数的**原型对象**
-
+    
+  * `__proto__`
+  
+    是Firefox、Safari和Chrome访问原型对象的办法，在每个对象上都有这个属性
+  
 * **判断实例与函数之间是否有关联**
   * `isPrototypeOf()`方法
 
@@ -1234,7 +1273,7 @@ var person2 = new Person("Shaw", 19, "student");
 
   `hasOwnProperty()`方法：属性存在于实例中返回`true`，属性存在于原型中返回`false`
 
-  `hasPtopotypeProperty()`方法：属性存在于实例中返回`false`，属性存在于原型中返回`true`
+  
 
 * **`for-in`循环**
 
@@ -1289,7 +1328,7 @@ var person2 = new Person("Shaw", 19, "student");
   };
   ```
 
-  问题：这样写会导致`constructor`属性不再指向`Person`函数，而是`Object`构造函数
+  问题：这样以对象字面量的形式写会导致**`constructor`属性不再指向`Person`函数**，而是`Object`构造函数
 
   解决方法：在`Person.prototype`中将`constructor`设置为`Person`
 
@@ -1299,17 +1338,59 @@ var person2 = new Person("Shaw", 19, "student");
 
 * **原型的动态性**
 
+  我们可以随时修改原型的属性和方法，并且修改可以立刻在实例中反映出来；
   
+  但是如果**重写**整个原型对象，那么会切断构造函数与最初原型对象的联系
+  
+* **原型的问题**
+
+  * 无初始化参数
+  * **共享引用类属性**
 
 #### 组合使用构造函数和原型模式
 
+基本模式：
+
+* 构造函数：定义实例属性
+* 原型模式：定义方法与共享的属性
+
+```javascript
+function Person(name, age, job) {
+    this.name = name;
+    this.age = age;
+    this.job = job;
+}
+Person.prototype = {
+    constructor: Person,
+   	sayName : function() {
+        alert(this.name);
+    }
+}
+```
+
 #### 动态原型模式
 
+目的：为了将所有信息都封装在构造函数中
 
+做法：在构造判断方法是否被创建过；若没有，则创建方法
+
+#### 寄生构造函数模式
+
+就是使用了`new`操作符的工厂模式
+
+（实例与构造函数之前没什么关系）
+
+#### 稳妥构造函数模式
+
+不使用`this`与`new`，适合在安全环境中使用
+
+（实例与构造函数之前没什么关系）
 
 ### 6.3 继承
 
 #### 原型链
+
+原型链是`Javascript`中实现继承的主要方法
 
 
 

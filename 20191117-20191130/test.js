@@ -1,3 +1,19 @@
-var url = require('url');
+let book = {
+  _year: 2004,
+  edition: 1
+};
 
-console.log(url.parse('http://user:pass@host.com:8080/path/to/file?query=string#hash'));
+Object.defineProperty(book, "year", {
+  enumerable: true,
+  get: function () {
+    return this._year;
+  },
+  set: function (newYear) {
+    if (newYear > 2004) {
+      this._year = newYear;
+      this.edition += newYear - 2004;
+    }
+  }
+});
+
+console.log(book);

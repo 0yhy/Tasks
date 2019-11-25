@@ -12,5 +12,8 @@
   "dependencies": {
     "marked": "^0.7.0",
     "mime": "^2.4.4"
+  },
+  "bin": {
+    "server": "server.js"
   }
 }
