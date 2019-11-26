@@ -17,7 +17,7 @@ let server = http.createServer(function (request, response) {
   }
   console.log(root);
   //文件的本地文件路径
-  let filepath = path.join(root, pathname);
+  let filepath = path.join(root, pathname).replace(/%20/g, " ");
   let ext = path.parse(filepath).ext;
   let mimeType = mime.getType(ext) || "";
   console.log("Type:", mimeType, filepath);
@@ -106,7 +106,7 @@ if (configs) {
         indexOpen = false;
       }
       else if (indexDirectory && config === "-d") {
-        if (!configs[i + 1].startsWith("-")) {
+        if (configs[i + 1] && !configs[i + 1].startsWith("-")) {
           root = `public/${configs[i + 1]}`;
           indexDirectory = false;
         }
@@ -123,10 +123,12 @@ fs.readdir(root, function (err, paths) {
   else {
     let json = [];
     paths.forEach(function (path) {
-      json.push({
-        name: path,
-        suffix: path.split(".")[1]
-      })
+      if (path !== "paths.json" && path !== "index.html") {
+        json.push({
+          name: path,
+          suffix: path.split(".")[1]
+        })
+      }
     })
     fs.writeFile(`${root}/paths.json`, JSON.stringify(json), function (err) {
       if (err) {
