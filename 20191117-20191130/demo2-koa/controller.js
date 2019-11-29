@@ -1,4 +1,3 @@
-const router = require("koa-router");
 const fs = require("fs");
 
 function addMapping(router, mapping) {
