@@ -588,3 +588,5 @@ app.listen(1205);
      由于middleware的顺序很重要，这个`koa-bodyparser`必须在`router`之前被注册到`app`对象上。 
 
   
+
+  ### 重构代码
