@@ -1,19 +1,9 @@
-let book = {
-  _year: 2004,
-  edition: 1
-};
-
-Object.defineProperty(book, "year", {
-  enumerable: true,
-  get: function () {
-    return this._year;
-  },
-  set: function (newYear) {
-    if (newYear > 2004) {
-      this._year = newYear;
-      this.edition += newYear - 2004;
-    }
+function foo() {
+  let a = 2;
+  function bar() {
+    console.log(a);
   }
-});
+  return bar;
+}
 
-console.log(book);
+foo()();

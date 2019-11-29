@@ -365,8 +365,6 @@ let start = parseInt(positions[0], 10);
 
 /index 
 
-命令行 封装成http-server
-
 
 
 ## cli
@@ -403,15 +401,15 @@ let start = parseInt(positions[0], 10);
 
 #### windows环境下
 
-1. 在`package.json`中添加以下字段
+2. 在`package.json`中添加以下字段
 
-   ```json
-   "bin": {
-   	"server": "server.js"
-   }
-   ```
+```json
+"bin": {
+	"server": "server.js"
+}
+```
 
-2. 在我们的工作文件夹根目录下执行`npm install . -g`
+3. 在我们的工作文件夹根目录下执行`npm install . -g`
 
    即可将正在开发的包安装为全局包。同时会在`npm`全局包目录中生成命令行所需要的`cmd`文件
 
@@ -447,3 +445,146 @@ let start = parseInt(positions[0], 10);
 
 后面的值为我们输入的命令行参数
 
+
+
+## Linux
+
+### Node
+
+* 坑`/usr/bin/env: ‘node\r’: No such file or directory`
+
+  换行要存成`LF`而不能存成`CRLF`，否则会报错
+
+* 解决了断开ssh连接后服务器不运行的问题
+  * `nohup src/server.js &`
+
+  * `ps aux`查看进程 ` sudo kill -9 PID`
+
+    或`ps -a | grep server.js`
+
+    
+
+### Nginx
+
+#### 安装Nginx
+
+```bash
+$sudo apt-get install nginx
+```
+
+Ubuntu安装之后的文件结构大致为：
+
+- 所有的配置文件都在/etc/nginx下，并且每个虚拟主机已经安排在了/etc/nginx/sites-available下
+- 程序文件在/usr/sbin/nginx
+- 日志放在了/var/log/nginx中
+- 并已经在/etc/init.d/下创建了启动脚本nginx
+- 默认的虚拟主机的目录设置在了/var/www/nginx-default (有的版本 默认的虚拟主机的目录设置在了/var/www, 请参考/etc/nginx/sites-available里的配置)
+
+#### 启动Nginx
+
+```bash
+$sudo /etc/init.d/nginx start
+```
+
+
+
+## KOA
+
+### Koa入门
+
+#### Koa简介
+
+`koa`是由`Express`原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。
+
+使用 `koa` 编写 web 应用，通过**组合不同的 `generator`**，可以免除重复繁琐的回调函数嵌套，并极大地提升错误处理的效率。
+
+`koa` 不在内核方法中绑定任何中间件，它仅仅提供了一个轻量优雅的函数库，使得编写 Web 应用变得得心应手。 
+
+
+
+#### Koa安装
+
+ `Koa`需要 `node` v7.6.0或更高版本来支持`ES2015`、异步方法 
+
+```bash
+$ npm i koa
+```
+
+
+
+#### 创建一个koa2工程
+
+```JavaScript
+// 导入的Koa是一个class
+const Koa = require("koa");
+
+// 创建一个Koa对象来表示web app本身
+const app = new Koa();
+
+app.use(async (ctx, next) => {
+  await next();
+  ctx.response.type = "text/html";
+  ctx.response.body = "<h1>Hello, KOA</h1>";
+});
+
+app.listen(1205);
+```
+
+* `ctx`：由`koa`传入的 封装了 `request`与`response`的变量
+* `next`： 由`koa`传入的 将要处理的 下一个异步函数
+
+
+
+#### 理解 koa middleware
+
+每收到一个`http`**请求**，`koa`就会**调用**通过`app.use()`注册的`async`函数，传入`ctx`与`next`参数
+
+ `koa`把很多`async`函数组成一个处理链，每个`async`函数都可以做一些自己的事情，然后用`await next()`来调用下一个`async`函数。我们把每个`async`函数称为middleware，这些middleware可以组合起来，完成很多有用的功能。 
+
+
+
+### 处理URL
+
+#### koa-router
+
+ 为了处理URL，我们需要引入`koa-router`这个middleware，让它负责处理URL映射。 
+
+`npm install koa-router`
+
+* 引入`koa-router`
+
+  ```javascript
+  const router = require("koa-router")();
+  ```
+
+* 注册`get`请求
+
+  ```JavaScript
+  router.get("/hello/:name", async (ctx, next) => {
+    let name = ctx.params.name;
+    ctx.response.body = `<h1>Hello, ${name}!</h1>`
+  });
+  router.get("/", async (ctx, next) => {
+    ctx.response.body = "<h1>Index</h1>";
+  });
+  ```
+
+* 注册`post`请求
+
+  用`post`请求处理URL时，我们会遇到一个问题：`post`请求通常会发送一个**表单**，或者**JSON**，它作为`request`的`body`发送，但无论是`Node.js`提供的原始`request`对象，还是`koa`提供的`request`对象，都**不提供**解析`request`的`body`的功能！
+
+  所以，我们又需要引入另一个middleware来解析原始`request`请求，然后，把解析后的参数，绑定到`ctx.request.body`中。
+
+  因此，我们需要引入**`koa-bodyparser`**
+
+  * 引入`koa-bodyparser`
+
+    ```javascript
+    const bodyParser = require("koa-bodyparser");
+    ```
+
+  * 注册`koa-bodyparser`函数
+
+     由于middleware的顺序很重要，这个`koa-bodyparser`必须在`router`之前被注册到`app`对象上。 
+
+  
