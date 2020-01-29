@@ -1,0 +1,105 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 250rpx;
+  position: absolute;
+  background-color: rgb(253, 150, 51);
+  width: 100%;
+}
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 36rpx;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+  /* top: 45rpx; */
+}
+.search {
+  width: 524rpx;
+	height: 62rpx;
+	background-color: #ffffff;
+  border-radius: 20rpx;
+  position: absolute;
+  /* top: 110rpx; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.searchicon {
+  width: 39rpx;
+  height: 39rpx;
+}
+.back {
+  width: 22rpx;
+  height: 41rpx;
+  position: absolute;
+  left: 30rpx;
+}
+.subList {
+  position: absolute;
+  top: 250rpx;
+  height: 70rpx;
+  color: #131313;
+  font-size: 29rpx;
+  font-family: PingFang-SC-Bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.subList text {
+  width: 150rpx;
+  text-align: center;
+  /* height: 100%; */
+}
+.currentTab {
+  color: #ff8932;
+}
+.shop {
+  display: block;
+  position: absolute;
+  top: 320rpx;
+  bottom: 0;
+  width: 100%;
+}
+swiper {
+  height: 100%;
+}
+/* 自适应高度 记录上次滑动位置 */
+swiper-item {
+  overflow: scroll;
+}
+.shopItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 170rpx;
+  background-color: #fff;
+  border-bottom: solid 1rpx rgb(204, 204, 204);
+  padding: 35rpx 0 0 0;
+}
+.shopItemTexts {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding: 0 0 0 3%;
+}
+.shopImgs {
+  width: 129rpx;
+  height: 129rpx;
+}
+.shopTitles {
+  font-family: PingFang-SC-Bold;
+  font-size: 27rpx;
+  font-weight: bold;
+  color: #000000;
+}
+.shopLocations {
+  font-family: PingFang-SC-Medium;
+  font-size: 21rpx;
+  color:#868686;
+}

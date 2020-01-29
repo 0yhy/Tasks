@@ -1,0 +1,28 @@
+<view class="header">
+  <text class="title" style="top:{{statusBarHeight + 40}}rpx">{{title}}</text>
+  <button bindtap="gosearch" class="search" style="top:{{statusBarHeight + 125}}rpx">
+    <image class="searchicon" src="{{searchIcon}}" />
+  </button>
+</view>
+<image class="back" src="../../assets/icons/back.png" bindtap="goback" style="top:{{statusBarHeight + 55}}rpx" />
+<view class="subList">
+  <!-- 太迷了 为什么这样写class flex就对不齐了 我佛了 -->
+  <text wx:for="{{subList}}" data-index="{{item.index}}" class="{{currentTab === item.index ? 'currentTab' : ''}}" bindtap="clickTab">
+    {{item.name}}
+  </text>
+</view>
+<view class="shop">
+  <swiper current="{{currentTab}}" bindchange="swipeTab">
+    <block wx:for="{{shopList}}">
+      <swiper-item>
+        <view class="shopItems" wx:for="{{item}}" wx:key="{{item.id}}" bindtap="goShopDetail" data-name="{{item.name}}">
+          <image src="{{item.image_url}}" class="shopImgs" />
+          <view class="shopItemTexts">
+            <text class="shopTitles">{{item.name}}</text>
+            <text class="shopLocations">{{item.address}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

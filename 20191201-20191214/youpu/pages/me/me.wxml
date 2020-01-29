@@ -1,0 +1,17 @@
+<view class="header">
+  <text class="title" style="top:{{statusBarHeight + 40}}rpx">我的</text>
+  <view wx:if="{{isLogin}}" style="top:{{statusBarHeight + 150}}rpx" class="user">
+    <image class="avatar" src="{{avatarUrl}}" />
+    <text class="nickname">{{nickname}}</text>
+  </view>
+  <button wx:else open-type="getUserInfo" style="top:{{statusBarHeight + 200}}rpx" bindgetuserinfo="authorize">
+    请先登录
+  </button>
+  <image class="homebackground" src="{{homeBackground}}" />
+</view>
+<view class="meList">
+  <view class="meListItem" wx:for="{{meListItem}}" data-name="{{item.name}}">
+    <text>{{item.name}}</text>
+    <image src="../../assets/icons/go.png" />
+  </view>
+</view>

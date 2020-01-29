@@ -1,0 +1,67 @@
+.homebackground {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+/* 华科优铺 + 搜索框 + 背景 */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 300rpx;
+  position: relative;
+}
+/* 华科优铺 */
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 36rpx;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+  /* top: 45rpx; */
+}
+.search {
+  width: 524rpx;
+	height: 62rpx;
+	background-color: #ffffff;
+  border-radius: 20rpx;
+  position: absolute;
+  /* top: 110rpx; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.searchicon {
+  width: 39rpx;
+  height: 39rpx;
+}
+
+.catagory {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 500rpx;
+  background-color: white;
+}
+.catagoryItem {
+  width: 30%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.catagoryTexts {
+  font-family: PingFangSC-Semibold;
+  font-size: 25rpx;
+  color: #353535;
+}
+.catagoryImgs {
+  width: 80rpx;
+  height: 80rpx;
+}

@@ -1,0 +1,51 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 250rpx;
+  position: relative;
+  background-color: rgb(253, 150, 51);
+}
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 36rpx;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+  /* top: 45rpx; */
+}
+.searchcontent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  /* top: 115rpx; */
+}
+.search {
+  width: 621rpx;
+	height: 62rpx;
+	background-color: #ffffff;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.searchicon {
+  width: 39rpx;
+  height: 39rpx;
+}
+.searchtext {
+  font-family: PingFangSC-Regular;
+  font-size: 25rpx;
+  color: white;
+  margin: 0 0 0 30rpx;
+}
+.back {
+  width: 22rpx;
+  height: 41rpx;
+  position: absolute;
+  left: 30rpx;
+}

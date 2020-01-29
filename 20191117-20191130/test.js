@@ -1,9 +1,2 @@
-function foo() {
-  let a = 2;
-  function bar() {
-    console.log(a);
-  }
-  return bar;
-}
-
-foo()();
+a = 1;
+let a = 2;

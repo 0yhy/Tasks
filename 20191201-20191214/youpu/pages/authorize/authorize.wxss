@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: rgb(253, 150, 51);
+}
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 36rpx;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+  /* top: 45rpx; */
+}
+
+.authorize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mascot {
+  width: 425rpx;
+  height: 286rpx;
+  margin: 100rpx 0 50rpx 0;
+}

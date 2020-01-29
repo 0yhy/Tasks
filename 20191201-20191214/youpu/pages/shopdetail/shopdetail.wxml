@@ -1,0 +1,21 @@
+<view class="header" style="height:{{statusBarHeight + 100}}rpx">
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">{{title}}</text>
+</view>
+<image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
+<view class="shopDetail">
+  <view class="titleAndLike">
+    <text>{{title}}</text>
+    <image class="like" src="{{currentLikeIcon?likeIcon:likeEmptyIcon}}" bindtap="like" />
+  </view>
+  <text class="average">人均：￥{{}}</text>
+  <view class="time">
+    <image src="{{timeIcon}}" class="timeIcon" />
+    <text>营业时间</text>
+    <text>：9:00-23:00</text>
+  </view>
+  <view class="location">
+    <image src="{{locationIcon}}" class="locationIcon" />
+    <text>地址</text>
+    <text>：华中科技大学紫菘路</text>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+<view class="header">
+  <text class="title" style="top:{{statusBarHeight + 40}}rpx">华科优铺</text>
+  <view class="searchcontent" style="top:{{statusBarHeight + 125}}rpx">
+    <button class="search">
+      <image class="searchicon" src="{{searchIcon}}" />
+    </button>
+    <text class="searchtext">搜索</text>
+  </view>
+</view>
+<image class="back" style="top:{{statusBarHeight + 55}}rpx" src="../../assets/icons/back.png" bindtap="goback" />

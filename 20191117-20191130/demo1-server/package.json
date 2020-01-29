@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "marked": "^0.7.0",
-    "mime": "^2.4.4"
+    "mime": "^2.4.4",
+    "open": "^7.0.0"
   },
   "bin": {
     "server": "server.js"

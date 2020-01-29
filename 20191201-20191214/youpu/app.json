@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/shops/shops",
+    "pages/shopdetail/shopdetail",
+    "pages/me/me",
+    "pages/search/search",
+    "pages/authorize/authorize"
+  ],
+  "window": {
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home_default.png",
+        "selectedIconPath": "assets/icons/home_selected.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "assets/icons/mine_default.png",
+        "selectedIconPath": "assets/icons/mine_selected.png"
+      }
+    ],
+    "color": "#444444",
+    "selectedColor": "#fdb046"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: rgb(253, 150, 51);
+}
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 36rpx;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+  /* top: 45rpx; */
+}
+.back {
+  width: 22rpx;
+  height: 41rpx;
+  position: absolute;
+  top: 55rpx;
+  left: 30rpx;
+}
+
+.like {
+  height: 24rpx;
+  width: 27rpx;
+}
+
+.shopDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+.titleAndLike {
+  width: 90%;
+	font-family: PingFang-SC-Bold;
+	font-size: 38rpx;
+	line-height: 83rpx;
+	color: #252525;
+}
+.average {
+  width: 90%;
+  font-family: PingFang-SC-Bold;
+  font-size: 29rpx;
+  line-height: 83rpx;
+  color: #fda132;
+}
+.time {
+  width: 90%;
+}
+.timeIcon {
+  width: 35rpx;
+  height: 33rpx;
+}
+.location {
+  width: 90%;
+}
+.locationIcon {
+  width: 34rpx;
+  height: 38rpx;
+}

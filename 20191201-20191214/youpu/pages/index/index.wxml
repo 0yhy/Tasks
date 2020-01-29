@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="header">
+    <text class="title" style="top:{{statusBarHeight + 40}}rpx">华科优铺</text>
+    <button bindtap="gosearch" class="search" style="top:{{statusBarHeight + 125}}rpx">
+      <image class="searchicon" src="{{searchIcon}}" />
+    </button>
+    <image class="homebackground" src="{{homeBackground}}" />
+  </view>
+  <view class="catagory">
+    <view class="catagoryItem" bindtap="goToShop" wx:for="{{catagories}}" data-category="{{item.category}}" data-name="{{item.name}}" data-icon="{{item.icon}}">
+      <image class="catagoryImgs" src="{{item.icon}}" />
+      <text class="catagoryTexts">{{item.name}}</text>
+    </view>
+  </view>
+</view>

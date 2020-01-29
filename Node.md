@@ -359,12 +359,6 @@ let positions = range.replace("bytes=", "").split("-");
 let start = parseInt(positions[0], 10);
 ```
 
-后台路由转发 80端口
-
-/data 3000端口 静态服务器
-
-/index 
-
 
 
 ## cli
@@ -590,3 +584,4 @@ app.listen(1205);
   
 
   ### 重构代码
+
