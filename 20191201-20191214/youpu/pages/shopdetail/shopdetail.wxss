@@ -131,3 +131,12 @@
   height: 36rpx;
   width: 39rpx;
 }
+
+
+.comment-button {
+  height: 180rpx;
+  width: 180rpx;
+  position: fixed;
+  right: 5%;
+  bottom: 3%;
+}

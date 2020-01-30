@@ -47,4 +47,5 @@
     </view>
     <view class="comment-item" wx:for="{{comment}}"></view>
   </view>
+  <image class="comment-button" src="../../assets/comment_button.png" bindtap="goToComment" />
 </view>

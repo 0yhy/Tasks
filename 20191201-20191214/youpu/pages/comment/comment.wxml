@@ -1,0 +1,3 @@
+<view class="header" style="height:{{statusBarHeight + 100}}rpx">
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">写评论</text>
+</view>

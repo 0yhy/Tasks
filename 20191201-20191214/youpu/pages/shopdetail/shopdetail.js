@@ -77,5 +77,11 @@ Page({
         console.log(err);
       }
     });
+  },
+  goToComment: function () {
+    wx.navigateTo({
+      url: '../../pages/comment/comment',
+      fail: (err) => { console.log(err) },
+    });
   }
 })
