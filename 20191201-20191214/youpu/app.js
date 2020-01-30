@@ -2,10 +2,6 @@ App({
   globalData: {
     homeBackground: "../../assets/home_background.png",
     searchIcon: "../../assets/icons/search.png",
-    likeEmptyIcon: "../../assets/icons/icon-like-nor.png",
-    likeIcon: "../../assets/icons/icon-like.png",
-    timeIcon: "../../assets/icons/time.png",
-    locationIcon: "../../assets/icons/location.png",
     hostUrl: "https://byupick.ksmeow.moe",
   },
   goAuthorize: function () {
@@ -27,34 +23,32 @@ App({
     });
   },
   checkLoginStatus: function () {
-    if (this.globalData.token) {
-      wx.checkSession({
-        fail: () => {
-          this.login();
-        }
-      });
-    }
-    else {
+    if (wx.getStorageSync("token")) {
       this.login();
     }
   },
-  login: function () {
+  login: function (userInfo) {
     wx.login({
       success: (result) => {
-        if (result.code) {
+        let code = result.code;
+        if (code) {
           wx.request({
-            url: `${this.globalData.hostUrl}/user/token`,
-            data: { code: result.code, },
-            method: 'POST',
+            url: `${this.data.hostUrl}/user/token`,
+            data: { code: code, nickname: userInfo.nickName, avatar_url: userInfo.avatarUrl },
             header: { 'content-type': 'application/json' },
+            method: 'GET',
             success: (result) => {
-
+              console.log(result);
+              wx.setStorageSync("token", result.data.data.token);
+              wx.setStorageSync("isLogin", true);
             },
+            fail: function (err) {
+              console.log(err);
+            }
           });
         }
       }
     });
-
-  }
+  },
 })
 

@@ -1,21 +1,50 @@
 <view class="header" style="height:{{statusBarHeight + 100}}rpx">
-  <text class="title" style="top:{{statusBarHeight + 30}}rpx">{{title}}</text>
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">{{shop.name}}</text>
 </view>
 <image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
 <view class="shopDetail">
   <view class="titleAndLike">
-    <text>{{title}}</text>
-    <image class="like" src="{{currentLikeIcon?likeIcon:likeEmptyIcon}}" bindtap="like" />
+    <text>西一学生食堂</text>
+    <!-- <text>{{item.name}}</text> -->
+    <image class="like" src="{{currentLikeIcon?likedIcon:likeIcon}}" bindtap="like" />
+    <text class="liker-count">{{currentLikeCount}}</text>
   </view>
-  <text class="average">人均：￥{{}}</text>
-  <view class="time">
-    <image src="{{timeIcon}}" class="timeIcon" />
-    <text>营业时间</text>
-    <text>：9:00-23:00</text>
+  <text class="average">人均 ￥{{shop.cost}}</text>
+  <view class="time flex">
+    <image src="{{timeIcon}}" class="time-icon" />
+    <text class="time-title subtitle">营业时间</text>
+    <!-- <text>:{{shop.time}}</text> -->
+    <text>:9:00-23:00</text>
   </view>
-  <view class="location">
-    <image src="{{locationIcon}}" class="locationIcon" />
-    <text>地址</text>
-    <text>：华中科技大学紫菘路</text>
+  <view class="location flex">
+    <image src="{{locationIcon}}" class="location-icon" />
+    <text class="location-title subtitle">地址</text>
+    <!-- <text>:{{shop.address}}</text> -->
+    <text>:华中科技大学紫菘路</text>
+  </view>
+  <scroll-view class="images" scroll-x="{{true}}">
+    <image src="{{shop.image_url}}" />
+  </scroll-view>
+  <!-- <scroll-view class="tags" wx:for="{{shop.tags}}"scroll-x="{{true}}">
+    <text class="tags-item">{{item}}</text>
+  </scroll-view> -->
+  <scroll-view class="tags" scroll-x="{{true}}">
+    <text class="tags-item">味道好</text>
+    <text class="tags-item">座位多</text>
+    <text class="tags-item">菜式丰富</text>
+    <text class="tags-item">价格贵</text>
+    <text class="tags-item">分量足</text>
+    <text class="tags-item">干净卫生</text>
+    <text class="tags-item">干净卫生</text>
+    <text class="tags-item">干净卫生</text>
+    <text class="tags-item">干净卫生</text>
+  </scroll-view>
+  <view class="comment">
+    <view class="comment-header">
+      <image class="comment-header-icon" src="../../assets/icons/comment.png" />
+      <text>最新评论</text>
+      <text>最热评论</text>
+    </view>
+    <view class="comment-item" wx:for="{{comment}}"></view>
   </view>
 </view>

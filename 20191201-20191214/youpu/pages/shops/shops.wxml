@@ -7,15 +7,15 @@
 <image class="back" src="../../assets/icons/back.png" bindtap="goback" style="top:{{statusBarHeight + 55}}rpx" />
 <view class="subList">
   <!-- 太迷了 为什么这样写class flex就对不齐了 我佛了 -->
-  <text wx:for="{{subList}}" data-index="{{item.index}}" class="{{currentTab === item.index ? 'currentTab' : ''}}" bindtap="clickTab">
+  <button wx:for="{{subList}}" data-index="{{item.index}}" class="{{currentTab === item.index ? 'currentTab' : ''}}" bindtap="clickTab">
     {{item.name}}
-  </text>
+  </button>
 </view>
 <view class="shop">
   <swiper current="{{currentTab}}" bindchange="swipeTab">
     <block wx:for="{{shopList}}">
       <swiper-item>
-        <view class="shopItems" wx:for="{{item}}" wx:key="{{item.id}}" bindtap="goShopDetail" data-name="{{item.name}}">
+        <view class="shopItems" wx:for="{{item}}" wx:key="{{item.id}}" bindtap="goShopDetail" data-id="{{item._id}}">
           <image src="{{item.image_url}}" class="shopImgs" />
           <view class="shopItemTexts">
             <text class="shopTitles">{{item.name}}</text>

@@ -61,6 +61,13 @@
 					"pathName": "pages/shops/shops",
 					"query": "category=1&title=找吃",
 					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/shopdetail/shopdetail",
+					"pathName": "pages/shopdetail/shopdetail",
+					"query": "id=5df49dfab4192c0001458bab",
+					"scene": null
 				}
 			]
 		}

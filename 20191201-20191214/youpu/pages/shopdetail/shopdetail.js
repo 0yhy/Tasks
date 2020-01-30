@@ -1,19 +1,22 @@
 let app = getApp();
 
 const initialData = {
-  title: "",
   statusBarHeight: app.globalData.statusBarHeight,
-  likeEmptyIcon: app.globalData.likeEmptyIcon,
-  likeIcon: app.globalData.likeIcon,
+  hostUrl: app.globalData.hostUrl,
+  token: wx.getStorageSync("token"),
+  likeIcon: "../../assets/icons/love_empty.png",
+  likedIcon: "../../assets/icons/love_solid.png",
   currentLikeIcon: false,
-  timeIcon: app.globalData.timeIcon,
-  locationIcon: app.globalData.locationIcon
+  currentLikeCount: 0,
+  timeIcon: "../../assets/icons/time.png",
+  locationIcon: "../../assets/icons/location.png"
 }
 
 Page({
   data: initialData,
   onLoad: function (option) {
-    this.setData({ title: option.title });
+    const shop_id = option.id;
+    this.getShopInfo(shop_id);
   },
   goback: function () {
     wx.navigateBack({
@@ -21,7 +24,58 @@ Page({
     });
   },
   like: function (e) {
-    const bool = this.data.currentLikeIcon;
-    this.setData({ currentLikeIcon: !bool });
+    if (!this.data.currentLikeIcon) {
+      wx.request({
+        url: `${this.data.hostUrl}/shop/like`,
+        header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+        data: { 'shop_id': this.data.shop.shop_id },
+        method: 'POST',
+        success: (result) => {
+          let cnt = this.data.currentLikeCount + 1;
+          console.log(result.data.data);
+          this.setData({ currentLikeIcon: true, currentLikeCount: cnt });
+        }
+      });
+    }
+    else {
+      wx.request({
+        url: `${this.data.hostUrl}/shop/unlike`,
+        header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+        data: { 'shop_id': this.data.shop.shop_id },
+        method: 'POST',
+        success: (result) => {
+          console.log(result.data.data);
+          let cnt = this.data.currentLikeCount - 1;
+          this.setData({ currentLikeIcon: false, currentLikeCount: cnt });
+        }
+      });
+    }
+  },
+  getShopInfo: function (shop_id) {
+    wx.request({
+      url: `${this.data.hostUrl}/shop/info?shop_id=${shop_id}`,
+      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+      method: 'GET',
+      success: (result) => {
+        console.log(result.data.data);
+        this.setData({ shop: result.data.data, currentLikeIcon: result.data.data.liked, currentLikeCount: result.data.data.liker_count });
+        this.getComment();
+      },
+      fail: (err) => {
+        console.log(err);
+      }
+    });
+  },
+  getComment: function () {
+    wx.request({
+      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop.shop_id}`,
+      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+      success: (result) => {
+        console.log(result.data.data);
+      },
+      fail: (err) => {
+        console.log(err);
+      }
+    });
   }
 })

@@ -1,6 +1,0 @@
-<view class="header" style="height:{{statusBarHeight + 100}}rpx">
-  <text class="title" style="top:{{statusBarHeight + 30}}rpx">微信授权</text>
-</view>
-<view class="authorize">
-  <image class="mascot" src="../../assets/mascot.png" />
-</view>

@@ -7,13 +7,12 @@
 }
 .title {
   font-family: PingFangSC-Semibold;
-	font-size: 36rpx;
+	font-size: 120%;
 	font-weight: bold;
 	line-height: 70rpx;
 	letter-spacing: -1rpx;
   color: #f4f4f4;
   position: absolute;
-  /* top: 45rpx; */
 }
 .back {
   width: 22rpx;
@@ -36,10 +35,25 @@
 }
 .titleAndLike {
   width: 90%;
-	font-family: PingFang-SC-Bold;
-	font-size: 38rpx;
+  font-family: PingFang-SC-Bold;
+  font-weight: bold;
+	font-size: 125%;
 	line-height: 83rpx;
-	color: #252525;
+  color: #252525;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  margin: 10rpx 0 0 0;
+}
+.like {
+  margin: 0 0 0 30rpx;
+}
+.liker-count {
+	font-family: PingFang-SC-Regular;
+	font-size: 25rpx;
+  color: #010101;
+  font-weight: normal;
+  margin: 0 0 0 10rpx;
 }
 .average {
   width: 90%;
@@ -47,18 +61,73 @@
   font-size: 29rpx;
   line-height: 83rpx;
   color: #fda132;
+  height: 45rpx;
 }
 .time {
   width: 90%;
 }
-.timeIcon {
+.time-icon {
   width: 35rpx;
   height: 33rpx;
 }
 .location {
   width: 90%;
 }
-.locationIcon {
+.location-icon {
   width: 34rpx;
   height: 38rpx;
+}
+.subtitle {
+  width: 130rpx;
+  text-align-last: justify;
+  display: inline-block;
+	font-family: PingFangSC-Medium;
+	font-size: 105%;
+	font-weight: bold;
+	line-height: 83rpx;
+  color: #181818;
+  margin: 0 10rpx 0 10rpx;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.images {
+  width: 90%;
+  margin: 15rpx 0 0 0;
+  white-space: nowrap;
+}
+.images image {
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 15rpx;
+}
+.tags {
+  width: 90%;
+  height: 60rpx;
+  margin: 15rpx 0 0 0;
+  white-space: nowrap;
+}
+.tags-item {
+  background-color: rgb(255, 205, 123);
+  border-radius: 20rpx;
+  padding: 5rpx 20rpx;
+  margin: 0 10rpx;
+  font-size: 65%;
+  display: inline-block;
+}
+
+.comment {
+  width: 90%;
+}
+.comment-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.comment-header-icon {
+  height: 36rpx;
+  width: 39rpx;
 }

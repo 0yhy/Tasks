@@ -4,8 +4,7 @@
     "pages/shops/shops",
     "pages/shopdetail/shopdetail",
     "pages/me/me",
-    "pages/search/search",
-    "pages/authorize/authorize"
+    "pages/search/search"
   ],
   "window": {
     "navigationStyle": "custom"

@@ -11,9 +11,6 @@ let Data = {
   token: wx.getStorageSync("token")
 };
 
-let shops = require("../../test/1").json.data;
-let subcategories = require("../../test/subcategories").json.data.subcategories;
-
 Page({
   data: Data,
   onLoad: function (option) {
@@ -79,7 +76,7 @@ Page({
   },
   goShopDetail: function (e) {
     wx.navigateTo({
-      url: `../../pages/shopdetail/shopdetail?title=${e.currentTarget.dataset.name}`
+      url: `../../pages/shopdetail/shopdetail?id=${e.currentTarget.dataset.id}`
     })
   },
   swipeTab: function (e) {

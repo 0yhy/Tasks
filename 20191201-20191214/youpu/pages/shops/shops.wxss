@@ -48,11 +48,17 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  overflow: scroll;
+  width: 100%;
 }
-.subList text {
-  width: 150rpx;
+.subList button {
+  /* width: 160rpx; */
   text-align: center;
-  /* height: 100%; */
+  background-color: transparent;
+  padding: 0;
+}
+.subList button::after {
+  display: none;
 }
 .currentTab {
   color: #ff8932;
