@@ -1,3 +1,34 @@
 <view class="header" style="height:{{statusBarHeight + 100}}rpx">
   <text class="title" style="top:{{statusBarHeight + 30}}rpx">写评论</text>
 </view>
+<view class="shop-title">
+  <view class="shop-title-left">
+    <image class="shop-title-icon" src="../../assets/icons/store.png" />
+    <text>店铺名</text>
+  </view>
+  <view class="shop-title-right">
+    <text>{{shop_name}}</text>
+  </view>
+</view>
+<view class="tags">
+  <swiper indicator-dots="{{true}}" class="tags-swiper" indicator-active-color="rgb(253, 161, 50)" bindchange="swipeSwiper">
+    <block wx:for="{{tags}}">
+      <swiper-item>
+        <text class="tags-item {{item.selected ? 'current' : ''}}" wx:for="{{item}}" data-index="{{index}}" bindtap="selectTag">{{item.tag}}</text>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view class="comment">
+  <textarea class="comment-area" placeholder="{{placeholder}}" bindinput="inputComment"></textarea>
+  <view class="comment-upload">
+    <image class="comment-upload-image" src="../../assets/icons/camera.png" />
+  </view>
+</view>
+<view class="cost">
+  <text>消费 ￥</text>
+  <input placeholder="请输入消费金额" type="number" />
+</view>
+<view class="submit" bindtap="submitComment">
+  <button class="submit-button">发表</button>
+</view>

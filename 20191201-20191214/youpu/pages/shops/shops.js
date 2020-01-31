@@ -76,8 +76,8 @@ Page({
   },
   goShopDetail: function (e) {
     wx.navigateTo({
-      url: `../../pages/shopdetail/shopdetail?id=${e.currentTarget.dataset.id}`
-    })
+      url: `../../pages/shopdetail/shopdetail?id=${e.currentTarget.dataset.id}&sub=${e.currentTarget.dataset.sub}&category=${this.data.category}`
+    });
   },
   swipeTab: function (e) {
     this.setData({ currentTab: e.detail.current });

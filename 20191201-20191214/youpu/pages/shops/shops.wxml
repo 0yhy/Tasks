@@ -15,7 +15,7 @@
   <swiper current="{{currentTab}}" bindchange="swipeTab">
     <block wx:for="{{shopList}}">
       <swiper-item>
-        <view class="shopItems" wx:for="{{item}}" wx:key="{{item.id}}" bindtap="goShopDetail" data-id="{{item._id}}">
+        <view class="shopItems" wx:for="{{item}}" wx:key="{{item.id}}" bindtap="goShopDetail" data-id="{{item.shop_id}}" data-sub="{{item.subcategory}}">
           <image src="{{item.image_url}}" class="shopImgs" />
           <view class="shopItemTexts">
             <text class="shopTitles">{{item.name}}</text>

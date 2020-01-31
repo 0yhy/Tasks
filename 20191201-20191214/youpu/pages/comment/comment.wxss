@@ -14,3 +14,90 @@
   color: #f4f4f4;
   position: absolute;
 }
+.shop-title {
+  background-color: white;
+  display: flex;
+  padding: 20rpx 50rpx;
+  margin: 8rpx 0;
+}
+.shop-title-left {
+  width: 50%;
+}
+.shop-title-right {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.shop-title-icon {
+  height: 32rpx;
+  width: 32rpx;
+}
+
+
+.tags {
+  background-color: white;
+  padding: 40rpx 40rpx 30rpx 40rpx;
+}
+.tags-swiper {
+  height: 200rpx;
+  width: 100%;
+}
+.tags-item {
+  background-color: rgb(235, 234, 234);
+  color: #454545;
+  border-radius: 20rpx;
+  padding: 10rpx 20rpx;
+  margin: 10rpx 10rpx;
+  font-size: 75%;
+  display: inline-block;
+}
+.current {
+  background-color: rgb(255, 205, 123);
+}
+.comment {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8rpx 0;
+}
+.comment-area {
+  height: 255rpx;
+  width: 629rpx;
+  padding: 20rpx;	
+  border: solid 1rpx #cccccc;
+  margin: 20rpx 0 0 0;
+}
+.comment-upload {
+  margin: 20rpx 0;
+  width: 90%;
+}
+.comment-upload-image {
+  height: 141rpx;
+  width: 141rpx;
+}
+.cost {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: white;
+  margin: 8rpx 0;
+  padding: 20rpx;
+}
+
+.submit {
+  background-color: white;
+  height: 100%;
+}
+.submit-button {
+	width: 160rpx;
+	height: 60rpx;
+	background-color: #fea91c;
+  border-radius: 30rpx;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 95%;
+}

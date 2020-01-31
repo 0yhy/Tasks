@@ -66,14 +66,14 @@
 					"id": 2,
 					"name": "pages/shopdetail/shopdetail",
 					"pathName": "pages/shopdetail/shopdetail",
-					"query": "id=5df49dfab4192c0001458bab",
+					"query": "id=5df49dfab4192c0001458bab&sub=5df49dc5b4192c0001458ba9&category=1",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "pages/comment/comment",
 					"pathName": "pages/comment/comment",
-					"query": "id=5df49dfab4192c0001458bab",
+					"query": "shop_id=5df49dfab4192c0001458bab&shop_name=shoptest1&subcategory=5df49dc5b4192c0001458ba9&category=1",
 					"scene": null
 				}
 			]

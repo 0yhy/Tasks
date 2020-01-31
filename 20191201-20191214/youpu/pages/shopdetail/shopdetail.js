@@ -9,14 +9,17 @@ const initialData = {
   currentLikeIcon: false,
   currentLikeCount: 0,
   timeIcon: "../../assets/icons/time.png",
-  locationIcon: "../../assets/icons/location.png"
+  locationIcon: "../../assets/icons/location.png",
+  curSub: undefined,
+  curCategory: undefined
 }
 
 Page({
   data: initialData,
   onLoad: function (option) {
-    const shop_id = option.id;
-    this.getShopInfo(shop_id);
+    const { id, sub, category } = option;
+    this.setData({ curSub: sub, curCategory: category });
+    this.getShopInfo(id);
   },
   goback: function () {
     wx.navigateBack({
@@ -68,7 +71,7 @@ Page({
   },
   getComment: function () {
     wx.request({
-      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop.shop_id}`,
+      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop.shop_id}&subcategory=${this.data.shop.subcategory}`,
       header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
       success: (result) => {
         console.log(result.data.data);
@@ -80,7 +83,7 @@ Page({
   },
   goToComment: function () {
     wx.navigateTo({
-      url: '../../pages/comment/comment',
+      url: `../../pages/comment/comment?shop_id=${this.data.shop.shop_id}&shop_name=${this.data.shop.name}&category=${this.data.curCategory}&subcategory=${this.data.curSub}`,
       fail: (err) => { console.log(err) },
     });
   }
