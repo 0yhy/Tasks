@@ -71,10 +71,37 @@ Page({
   },
   getComment: function () {
     wx.request({
-      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop.shop_id}&subcategory=${this.data.shop.subcategory}`,
+      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop.shop_id}`,
       header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
       success: (result) => {
         console.log(result.data.data);
+        let comments = result.data.data;
+        // 包含所有评论中含有的不重复的openid
+        let openidArr = [];
+        // 一个json数组，包含openid, avatar_url, nickname
+        let userinfoArr = [];
+        // 得到所有评论用户的openid，存入数组
+        for (let comment of comments) {
+          if (openidArr.indexOf(comment.openid) === -1) {
+            openidArr.push(comment.openid);
+          }
+        }
+        // 构造userinfoArr
+        for (let i = 0; i < openidArr.length; ++i) {
+          wx.request({
+            url: `${this.data.hostUrl}/user/info?openid=${openidArr[i]}`,
+            header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+            success: (result) => {
+              console.log(result.data.data);
+              userinfoArr.push({
+                openid: openidArr[i],
+                avatar: result.data.data.avatar_url,
+                nickname: result.data.data.nickname
+              });
+            },
+          });
+        }
+        console.log(userinfoArr);
       },
       fail: (err) => {
         console.log(err);

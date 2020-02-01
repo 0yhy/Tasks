@@ -31,13 +31,12 @@ Page({
         console.log(tags);
         let arr = [];
         let subArrNum = Math.ceil(tags.length / 9);
-        let lastSubArrNum = tags.length % 9 - 1;
+        let lastSubArrNum = tags.length % 9;
         for (let i = 0; i < subArrNum; ++i) {
           let subArr = [];
           let jMax = (i === subArrNum - 1) ? lastSubArrNum : 8;
           for (let j = 0; j < jMax; ++j) {
-            console.log("j:", j)
-            subArr.push({ tag: tags[0].name, selected: false });
+            subArr.push({ tag: tags[0].name, selected: false, id: tags[0]._id });
             tags.shift();
           }
           arr.push(subArr);
@@ -58,7 +57,7 @@ Page({
     let curIndex = e.currentTarget.dataset.index;
     // 新的tags数组
     let newTags = this.data.tags;
-    let curTag = newTags[this.data.curSwiperNumber][curIndex].tag;
+    let curTag = newTags[this.data.curSwiperNumber][curIndex].id;
     newTags[this.data.curSwiperNumber][curIndex].selected = !newTags[this.data.curSwiperNumber][curIndex].selected;
     this.setData({ tags: newTags });
     // 更新选中标签数组
@@ -77,9 +76,15 @@ Page({
     this.setData({ commentContent: e.detail.value });
   },
   submitComment: function () {
+    const data = {
+      shop_id: this.data.shop_id,
+      tags: this.data.selectedTags,
+      text: this.data.commentContent,
+    }
+    console.log(data);
     wx.request({
       url: `${this.data.hostUrl}/comment/`,
-      data: { shop_id: this.data.shop_id, tags: this.data.selectedTags, text: this.data.commentContent },
+      data: data,
       header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
       method: 'POST',
       success: (result) => {

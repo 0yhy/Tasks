@@ -4,14 +4,17 @@ let form = document.querySelector("form");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   let username = login.username.value;
-  let password = login.password.value;
+  let password = window.btoa(login.password.value);
+  console.log(password);
   fetch(url + `?username=${username}&password=${password}`, {
     method: "GET",
-    mode: "cors",
+    // mode: "cors",
   })
     .then(response => {
       response.json().then(data => {
-        console.log(data.data.token);
+        console.log(data);
       })
     })
 })
+
+// ub5nf6v3MzQRktGe

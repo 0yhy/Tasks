@@ -1,12 +1,13 @@
 const url = "https://byupick.ksmeow.moe/backstage/";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzY0Mzc2NjAsImlhdCI6MTU3NjQyMzI2MCwidXNlcm5hbWUiOiJhZG1pbiJ9.GLFQ4LIa9NvcrweOfs2Wr9yA3V6j5-4C0wV0ajTwGoI";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODA1Mzk0NzQsImlhdCI6MTU4MDUyNTA3NCwic3ViIjoiVVBpY2stS1MgQmFja3N0YWdlIFRva2VuIiwidXNlcm5hbWUiOiJhZG1pbiJ9.xgqgOuqHVYYgoG9F3yBcsdpEWZlgdYWTFEpunSbkZSI";
 
 (function addUser() {
   let addUserForm = document.querySelector(".addUser form");
   addUserForm.addEventListener("submit", function (e) {
-    let username = addUser.username.value;
-    let password = addUser.password.value;
-    let password1 = addUser.password1.value;
+    console.log("hello");
+    let username = addUserForm.username.value;
+    let password = addUserForm.password.value;
+    let password1 = addUserForm.password1.value;
     e.preventDefault();
     if (password !== password1) {
       alert("两次输入密码不相等！请重新输入")
@@ -15,10 +16,13 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzY0Mzc2NjAsImlh
       alert("用户名不能为空！")
     }
     else {
-      fetch(url + `user/`, {
+      fetch(`${url}user/`, {
         method: "POST",
-        mode: "cors",
-        credentials: "include",
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({//post请求参数 
           name: username,
           password: window.btoa(password)
@@ -100,4 +104,4 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzY0Mzc2NjAsImlh
         console.log(response.json());
       })
   });
-})
+})();
