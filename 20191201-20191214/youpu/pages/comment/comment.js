@@ -11,8 +11,7 @@ const initialData = {
   selectedTags: [],
   curSwiperNumber: 0,
   placeholder: "说出你对这家店的感受与体验，夸奖与吐槽，让更多人看到吧~",
-  commentContent: "",
-  token: wx.getStorageSync("token")
+  commentContent: ""
 };
 
 Page({
@@ -81,18 +80,24 @@ Page({
       tags: this.data.selectedTags,
       text: this.data.commentContent,
     }
-    console.log(data);
+    console.log(wx.getStorageSync("token"));
     wx.request({
       url: `${this.data.hostUrl}/comment/`,
       data: data,
-      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${wx.getStorageSync("token")}` },
       method: 'POST',
       success: (result) => {
         console.log(result);
+        this.goback();
       },
       fail: (err) => {
         console.log(err);
       }
+    });
+  },
+  goback: function () {
+    wx.navigateBack({
+      delta: 1
     });
   }
 });

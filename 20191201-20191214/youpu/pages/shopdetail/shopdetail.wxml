@@ -2,7 +2,7 @@
   <text class="title" style="top:{{statusBarHeight + 30}}rpx">{{shop.name}}</text>
 </view>
 <image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
-<view class="shopDetail">
+<view class="shopDetail" style="top:{{statusBarHeight + 105}}rpx">
   <view class="titleAndLike">
     <text>西一学生食堂</text>
     <!-- <text>{{item.name}}</text> -->
@@ -45,7 +45,15 @@
       <text>最新评论</text>
       <text>最热评论</text>
     </view>
-    <view class="comment-item" wx:for="{{comment}}"></view>
+    <view class="comment-item" wx:for="{{comment}}">
+      <view class="comment-item-avatar">
+        <image src="{{item.avatar_url}}" />
+      </view>
+      <view class="comment-item-content">
+        <text class="comment-item-content-nickname">{{item.nickname}}</text>
+        <text class="comment-item-content-text">{{item.text}}</text>
+      </view>
+    </view>
   </view>
   <image class="comment-button" src="../../assets/comment_button.png" bindtap="goToComment" />
 </view>

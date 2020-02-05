@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: rgb(253, 150, 51);
+}
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 120%;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+}
+.back {
+  width: 22rpx;
+  height: 41rpx;
+  position: absolute;
+  top: 55rpx;
+  left: 30rpx;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mascot {
+  width: 500rpx;
+  height: 350rpx;
+  margin: 50rpx 0;
+}
+.text {
+  color: rgb(195, 195, 195);
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 50rpx 0;
+}
+button {
+  width: 300rpx;
+  font-size: 95%;
+  margin: 0 20rpx;
+}
+.refuse {
+  background-color: white;
+
+}
+.allow {
+  background-color: rgb(253, 96, 31);
+  color: white;
+}

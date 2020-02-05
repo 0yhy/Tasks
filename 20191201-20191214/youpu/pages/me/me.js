@@ -32,39 +32,16 @@ let Data = {
 };
 Page({
   data: Data,
-  onLoad: function () {
+  onShow: function () {
     this.getUserInfo();
   },
-  authorize: function (e) {
-    // 点击 opentype button 获取用户授权后返回值为用户的信息
-    console.log(e.detail);
-    if (e.detail.userInfo) {
-      this.login(e.detail.userInfo);
-    }
-  },
-  login: function (userInfo) {
-    wx.login({
+  goAuthorize: function () {
+    wx.navigateTo({
+      url: '../../pages/authorize/authorize',
       success: (result) => {
-        let code = result.code;
-        if (code) {
-          wx.request({
-            url: `${this.data.hostUrl}/user/token`,
-            data: { code: code, nickname: userInfo.nickName, avatar_url: userInfo.avatarUrl },
-            header: { 'content-type': 'application/json' },
-            method: 'GET',
-            success: (result) => {
-              console.log(result);
-              wx.setStorageSync("token", result.data.data.token);
-              wx.setStorageSync("isLogin", true);
-              this.setData({ isLogin: true });
-              this.getUserInfo();
-            },
-            fail: function (err) {
-              console.log(err);
-            }
-          });
-        }
-      }
+        console.log(result);
+      },
+      fail: (err) => { console.log(err) }
     });
   },
   getUserInfo: function () {
@@ -77,7 +54,7 @@ Page({
             timeout: 10000,
             success: (result) => {
               let userInfo = result.userInfo;
-              this.setData({ nickname: userInfo.nickName, avatarUrl: userInfo.avatarUrl });
+              this.setData({ nickname: userInfo.nickName, avatarUrl: userInfo.avatarUrl, isLogin: true });
             }
           });
         }

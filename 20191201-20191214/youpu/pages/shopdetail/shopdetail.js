@@ -17,16 +17,16 @@ const initialData = {
 Page({
   data: initialData,
   onLoad: function (option) {
+    console.log(option);
     const { id, sub, category } = option;
+    this.setData({ shop_id: id });
     this.setData({ curSub: sub, curCategory: category });
     this.getShopInfo(id);
   },
-  goback: function () {
-    wx.navigateBack({
-      delta: 1
-    });
+  onShow: function () {
+    this.getComment();
   },
-  like: function (e) {
+  like: function () {
     if (!this.data.currentLikeIcon) {
       wx.request({
         url: `${this.data.hostUrl}/shop/like`,
@@ -62,7 +62,6 @@ Page({
       success: (result) => {
         console.log(result.data.data);
         this.setData({ shop: result.data.data, currentLikeIcon: result.data.data.liked, currentLikeCount: result.data.data.liker_count });
-        this.getComment();
       },
       fail: (err) => {
         console.log(err);
@@ -71,37 +70,11 @@ Page({
   },
   getComment: function () {
     wx.request({
-      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop.shop_id}`,
+      url: `${this.data.hostUrl}/comment/shop?shop_id=${this.data.shop_id}`,
       header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
       success: (result) => {
         console.log(result.data.data);
-        let comments = result.data.data;
-        // 包含所有评论中含有的不重复的openid
-        let openidArr = [];
-        // 一个json数组，包含openid, avatar_url, nickname
-        let userinfoArr = [];
-        // 得到所有评论用户的openid，存入数组
-        for (let comment of comments) {
-          if (openidArr.indexOf(comment.openid) === -1) {
-            openidArr.push(comment.openid);
-          }
-        }
-        // 构造userinfoArr
-        for (let i = 0; i < openidArr.length; ++i) {
-          wx.request({
-            url: `${this.data.hostUrl}/user/info?openid=${openidArr[i]}`,
-            header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
-            success: (result) => {
-              console.log(result.data.data);
-              userinfoArr.push({
-                openid: openidArr[i],
-                avatar: result.data.data.avatar_url,
-                nickname: result.data.data.nickname
-              });
-            },
-          });
-        }
-        console.log(userinfoArr);
+        this.setData({ comment: result.data.data });
       },
       fail: (err) => {
         console.log(err);
@@ -112,6 +85,11 @@ Page({
     wx.navigateTo({
       url: `../../pages/comment/comment?shop_id=${this.data.shop.shop_id}&shop_name=${this.data.shop.name}&category=${this.data.curCategory}&subcategory=${this.data.curSub}`,
       fail: (err) => { console.log(err) },
+    });
+  },
+  goback: function () {
+    wx.navigateBack({
+      delta: 1
     });
   }
 })

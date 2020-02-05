@@ -2,8 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  top: 0;
   background-color: rgb(253, 150, 51);
+  z-index: 10;
 }
 .title {
   font-family: PingFangSC-Semibold;
@@ -17,7 +20,7 @@
 .back {
   width: 22rpx;
   height: 41rpx;
-  position: absolute;
+  position: fixed;
   top: 55rpx;
   left: 30rpx;
 }
@@ -32,12 +35,16 @@
   flex-direction: column;
   align-items: center;
   background-color: white;
+  padding: 30rpx 0 0 0;
+  position: absolute;
+  overflow: scroll;
+  width: 100%;
 }
 .titleAndLike {
-  width: 90%;
+  width: 85%;
   font-family: PingFang-SC-Bold;
   font-weight: bold;
-	font-size: 125%;
+	font-size: 135%;
 	line-height: 83rpx;
   color: #252525;
   height: 50rpx;
@@ -56,7 +63,7 @@
   margin: 0 0 0 10rpx;
 }
 .average {
-  width: 90%;
+  width: 85%;
   font-family: PingFang-SC-Bold;
   font-size: 29rpx;
   line-height: 83rpx;
@@ -64,14 +71,14 @@
   height: 45rpx;
 }
 .time {
-  width: 90%;
+  width: 85%;
 }
 .time-icon {
   width: 35rpx;
   height: 33rpx;
 }
 .location {
-  width: 90%;
+  width: 85%;
 }
 .location-icon {
   width: 34rpx;
@@ -95,7 +102,7 @@
 }
 
 .images {
-  width: 90%;
+  width: 85%;
   margin: 15rpx 0 0 0;
   white-space: nowrap;
 }
@@ -105,9 +112,10 @@
   border-radius: 15rpx;
 }
 .tags {
-  width: 90%;
+  width: 100%;
   height: 60rpx;
   margin: 15rpx 0 0 0;
+  padding: 0 0 0 100rpx;
   white-space: nowrap;
 }
 .tags-item {
@@ -115,23 +123,51 @@
   border-radius: 20rpx;
   padding: 5rpx 20rpx;
   margin: 0 10rpx;
-  font-size: 65%;
+  font-size: 75%;
   display: inline-block;
 }
 
 .comment {
-  width: 90%;
+  width: 85%;
 }
 .comment-header {
   display: flex;
   align-items: center;
   width: 100%;
+  margin: 20rpx 0 0 0;
 }
 .comment-header-icon {
   height: 36rpx;
   width: 39rpx;
 }
+.comment-header text {
+  font-family: PingFangSC-Medium;
+	font-size: 100%;
+	letter-spacing: 0rpx;
+  color: #1b1b1b;
+  font-weight: bold;
+  margin: 0 20rpx;
+}
 
+.comment-item {
+  display: flex;
+  flex-direction: row;
+  padding: 30rpx 10rpx;
+  width: 100%;
+}
+.comment-item-avatar {
+  width: 20%;
+}
+.comment-item-avatar image{
+  width: 77rpx;
+  height: 77rpx;
+  border-radius: 50%;
+}
+.comment-item-content {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
 
 .comment-button {
   height: 180rpx;

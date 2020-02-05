@@ -1,0 +1,12 @@
+<view class="header" style="height:{{statusBarHeight + 100}}rpx">
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">微信授权</text>
+</view>
+<image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
+<view class="main-content">
+  <image class="mascot" src="../../assets/mascot.png" />
+  <text class="text">我们需要获得您的公开信息（昵称、头像等）</text>
+  <view class="buttons">
+    <button class="refuse" bindtap="goback">拒绝</button>
+    <button class="allow" open-type="getUserInfo" bindgetuserinfo="authorize">允许</button>
+  </view>
+</view>

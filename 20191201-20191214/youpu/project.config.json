@@ -75,6 +75,13 @@
 					"pathName": "pages/comment/comment",
 					"query": "shop_id=5df49dfab4192c0001458bab&shop_name=shoptest1&subcategory=5df49dc5b4192c0001458ba9&category=1",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/authorize/authorize",
+					"pathName": "pages/authorize/authorize",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

@@ -4,9 +4,7 @@
     <image class="avatar" src="{{avatarUrl}}" />
     <text class="nickname">{{nickname}}</text>
   </view>
-  <button wx:else open-type="getUserInfo" style="top:{{statusBarHeight + 200}}rpx" bindgetuserinfo="authorize">
-    请先登录
-  </button>
+  <button wx:else style="top:{{statusBarHeight + 200}}rpx" bindtap="goAuthorize">请先登录</button>
   <image class="homebackground" src="{{homeBackground}}" />
 </view>
 <view class="meList">

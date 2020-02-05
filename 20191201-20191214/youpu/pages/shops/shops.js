@@ -18,13 +18,14 @@ Page({
     this.setData({ title: option.title, category: option.category });
     this.getSubCategory();
   },
+  // 获取该大类下所有的商店列表
   getAllShops: function () {
     wx.request({
       url: `${this.data.hostUrl}/shop/index?category=${this.data.category}`,
-      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+      header: { 'content-type': 'application/json' },
       method: 'GET',
       success: (result) => {
-        console.log(this.data.subList);
+        console.log("shops------", result);
         let shops = result.data.data;
         let shopList = [];
         for (let i = 0; i < this.data.subList.length; ++i) {
@@ -40,6 +41,9 @@ Page({
     });
   },
   getSubIndex: function (_id) {
+    console.log("getSubIndex");
+    console.log(_id);
+    console.log(this.data.subList);
     for (let sub of this.data.subList) {
       if (sub._id === _id) {
         return sub.index;
@@ -49,7 +53,7 @@ Page({
   getSubCategory: function () {
     wx.request({
       url: `${this.data.hostUrl}/shop/subcategories?category=${this.data.category}`,
-      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+      header: { 'content-type': 'application/json' },
       method: 'GET',
       success: (result) => {
         console.log(result);
