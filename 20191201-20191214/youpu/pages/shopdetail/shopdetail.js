@@ -27,31 +27,36 @@ Page({
     this.getComment();
   },
   like: function () {
-    if (!this.data.currentLikeIcon) {
-      wx.request({
-        url: `${this.data.hostUrl}/shop/like`,
-        header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
-        data: { 'shop_id': this.data.shop.shop_id },
-        method: 'POST',
-        success: (result) => {
-          let cnt = this.data.currentLikeCount + 1;
-          console.log(result.data.data);
-          this.setData({ currentLikeIcon: true, currentLikeCount: cnt });
-        }
-      });
+    if (wx.getStorageSync("isLogin")) {
+      if (!this.data.currentLikeIcon) {
+        wx.request({
+          url: `${this.data.hostUrl}/shop/like`,
+          header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+          data: { 'shop_id': this.data.shop.shop_id },
+          method: 'POST',
+          success: (result) => {
+            let cnt = this.data.currentLikeCount + 1;
+            console.log(result.data.data);
+            this.setData({ currentLikeIcon: true, currentLikeCount: cnt });
+          }
+        });
+      }
+      else {
+        wx.request({
+          url: `${this.data.hostUrl}/shop/unlike`,
+          header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+          data: { 'shop_id': this.data.shop.shop_id },
+          method: 'POST',
+          success: (result) => {
+            console.log(result.data.data);
+            let cnt = this.data.currentLikeCount - 1;
+            this.setData({ currentLikeIcon: false, currentLikeCount: cnt });
+          }
+        });
+      }
     }
     else {
-      wx.request({
-        url: `${this.data.hostUrl}/shop/unlike`,
-        header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
-        data: { 'shop_id': this.data.shop.shop_id },
-        method: 'POST',
-        success: (result) => {
-          console.log(result.data.data);
-          let cnt = this.data.currentLikeCount - 1;
-          this.setData({ currentLikeIcon: false, currentLikeCount: cnt });
-        }
-      });
+      this.goAuthorize();
     }
   },
   getShopInfo: function (shop_id) {
@@ -82,9 +87,19 @@ Page({
     });
   },
   goToComment: function () {
+    if (wx.getStorageSync("isLogin")) {
+      wx.navigateTo({
+        url: `../../pages/comment/comment?shop_id=${this.data.shop.shop_id}&shop_name=${this.data.shop.name}&category=${this.data.curCategory}&subcategory=${this.data.curSub}`,
+        fail: (err) => { console.log(err) },
+      });
+    }
+    else {
+      this.goAuthorize();
+    }
+  },
+  goAuthorize: function () {
     wx.navigateTo({
-      url: `../../pages/comment/comment?shop_id=${this.data.shop.shop_id}&shop_name=${this.data.shop.name}&category=${this.data.curCategory}&subcategory=${this.data.curSub}`,
-      fail: (err) => { console.log(err) },
+      url: '../../pages/authorize/authorize'
     });
   },
   goback: function () {
