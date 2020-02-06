@@ -1,0 +1,51 @@
+<view class="header" style="height:{{statusBarHeight + 100}}rpx">
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">评论详情</text>
+</view>
+<image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
+<view class="userinfo">
+  <view class="userinfo-header">
+    <image class="userinfo-header-avatar" src="{{avatar_url}}" />
+    <text class="userinfo-header-nickname">{{nickname}}</text>
+    <button class="userinfo-header-follow">关注</button>
+  </view>
+  <view class="userinfo-text">{{commentText}}</view>
+</view>
+<view class="shopinfo" bindtap="goToShopDetail">
+  <view class="shopinfo-avatar">
+    <image class="shopinfo-avatar-image" src="{{shopInfo.image_url}}" />
+  </view>
+  <view class="shopinfo-content">
+    <!-- <view class="shopinfo-content-title">{{shopInfo.name}}</view> -->
+    <view class="shopinfo-content-title">品三锅</view>
+    <view class="shopinfo-content-location">
+      <image src="../../assets/icons/location2.png" />
+      <!-- <text>{{shopInfo.address}}</text> -->
+      <text>学二食堂与学一食堂之间二楼哈哈哈哈</text>
+    </view>
+  </view>
+  <view class="shopinfo-like">
+    <image class="shopinfo-like-icon" src="{{currentLikeIcon ? likedIcon : likeIcon}}" bindtap="like" />
+    <text>{{currentLikeCount}}</text>
+  </view>
+</view>
+<view class="secondcomment">
+  <view class="secondcomment-header">
+    <text class="secondcomment-header-text">评论</text>
+    <image class="secondcomment-header-commenticon" src="../../assets/icons/comment.png" bindtap="showMask" />
+    <image class="secondcomment-header-likeicon" src="../../assets/icons/like_empty.png" />
+  </view>
+  <view class="secondcomment-item" wx:for="{{secondCommentInfo}}">
+    <view class="secondcomment-item-avatar">
+      <image src="{{item.avatar_url}}" />
+    </view>
+    <view class="secondcomment-item-content">
+      <text class="secondcomment-item-content-nickname">{{item.nickname}}</text>
+      <text class="secondcomment-item-content-text">{{item.text}}</text>
+    </view>
+  </view>
+</view>
+<view class="input" style="display:{{maskDisplay}}">
+  <input placeholder="快来评论吧~" bindinput="setInputData" />
+  <text class="input-text" bindtap="sendComment">发送</text>
+</view>
+<view class="mask" style="display:{{maskDisplay}}" bindtap="cancelMask"></view>

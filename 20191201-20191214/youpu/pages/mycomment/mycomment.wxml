@@ -1,0 +1,4 @@
+<view class="header" style="height:{{statusBarHeight + 100}}rpx">
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">我的评论</text>
+</view>
+<image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />

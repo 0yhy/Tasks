@@ -1,3 +1,7 @@
+view {
+  margin: 0;
+  padding: 0;
+}
 .header {
   display: flex;
   flex-direction: column;
@@ -23,6 +27,7 @@
   position: fixed;
   top: 55rpx;
   left: 30rpx;
+  z-index: 12;
 }
 
 .like {
@@ -31,14 +36,17 @@
 }
 
 .shopDetail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 30rpx 0 0 0;
   position: absolute;
   overflow: scroll;
   width: 100%;
+}
+.shopdetail-header {
+  padding: 30rpx 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: white;
 }
 .titleAndLike {
   width: 85%;
@@ -112,11 +120,11 @@
   border-radius: 15rpx;
 }
 .tags {
-  width: 100%;
   height: 60rpx;
+  width: 85%;
   margin: 15rpx 0 0 0;
-  padding: 0 0 0 100rpx;
   white-space: nowrap;
+  overflow: hidden;
 }
 .tags-item {
   background-color: rgb(255, 205, 123);
@@ -127,14 +135,16 @@
   display: inline-block;
 }
 
+
 .comment {
-  width: 85%;
+  width: 100%;
 }
 .comment-header {
   display: flex;
   align-items: center;
-  width: 100%;
-  margin: 20rpx 0 0 0;
+  /* width: 100%; */
+  background-color: white;
+  padding: 20rpx;
 }
 .comment-header-icon {
   height: 36rpx;
@@ -152,8 +162,10 @@
 .comment-item {
   display: flex;
   flex-direction: row;
-  padding: 30rpx 10rpx;
-  width: 100%;
+  padding: 30rpx 40rpx;
+  /* width: 100%; */
+  margin: 3rpx 0 0 0;
+  background-color: white;
 }
 .comment-item-avatar {
   width: 20%;

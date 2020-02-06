@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: rgb(253, 150, 51);
+}
+.title {
+  font-family: PingFangSC-Semibold;
+	font-size: 120%;
+	font-weight: bold;
+	line-height: 70rpx;
+	letter-spacing: -1rpx;
+  color: #f4f4f4;
+  position: absolute;
+}
+.back {
+  width: 22rpx;
+  height: 41rpx;
+  position: absolute;
+  top: 55rpx;
+  left: 30rpx;
+}

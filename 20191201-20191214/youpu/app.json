@@ -6,7 +6,9 @@
     "pages/me/me",
     "pages/search/search",
     "pages/comment/comment",
-    "pages/authorize/authorize"
+    "pages/authorize/authorize",
+    "pages/mycomment/mycomment",
+    "pages/commentdetail/commentdetail"
   ],
   "window": {
     "navigationStyle": "custom"

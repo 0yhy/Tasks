@@ -3,49 +3,51 @@
 </view>
 <image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
 <view class="shopDetail" style="top:{{statusBarHeight + 105}}rpx">
-  <view class="titleAndLike">
-    <text>西一学生食堂</text>
-    <!-- <text>{{item.name}}</text> -->
-    <image class="like" src="{{currentLikeIcon?likedIcon:likeIcon}}" bindtap="like" />
-    <text class="liker-count">{{currentLikeCount}}</text>
-  </view>
-  <text class="average">人均 ￥{{shop.cost}}</text>
-  <view class="time flex">
-    <image src="{{timeIcon}}" class="time-icon" />
-    <text class="time-title subtitle">营业时间</text>
-    <!-- <text>:{{shop.time}}</text> -->
-    <text>:9:00-23:00</text>
-  </view>
-  <view class="location flex">
-    <image src="{{locationIcon}}" class="location-icon" />
-    <text class="location-title subtitle">地址</text>
-    <!-- <text>:{{shop.address}}</text> -->
-    <text>:华中科技大学紫菘路</text>
-  </view>
-  <scroll-view class="images" scroll-x="{{true}}">
-    <image src="{{shop.image_url}}" />
-  </scroll-view>
-  <!-- <scroll-view class="tags" wx:for="{{shop.tags}}"scroll-x="{{true}}">
+  <view class="shopdetail-header">
+    <view class="titleAndLike">
+      <text>西一学生食堂</text>
+      <!-- <text>{{item.name}}</text> -->
+      <image class="like" src="{{currentLikeIcon?likedIcon:likeIcon}}" bindtap="like" />
+      <text class="liker-count">{{currentLikeCount}}</text>
+    </view>
+    <text class="average">人均 ￥{{shop.cost}}</text>
+    <view class="time flex">
+      <image src="{{timeIcon}}" class="time-icon" />
+      <text class="time-title subtitle">营业时间</text>
+      <!-- <text>:{{shop.time}}</text> -->
+      <text>:9:00-23:00</text>
+    </view>
+    <view class="location flex">
+      <image src="{{locationIcon}}" class="location-icon" />
+      <text class="location-title subtitle">地址</text>
+      <!-- <text>:{{shop.address}}</text> -->
+      <text>:华中科技大学紫菘路</text>
+    </view>
+    <scroll-view class="images" scroll-x="{{true}}">
+      <image src="{{shop.image_url}}" />
+    </scroll-view>
+    <!-- <scroll-view class="tags" wx:for="{{shop.tags}}"scroll-x="{{true}}">
     <text class="tags-item">{{item}}</text>
   </scroll-view> -->
-  <scroll-view class="tags" scroll-x="{{true}}">
-    <text class="tags-item">味道好</text>
-    <text class="tags-item">座位多</text>
-    <text class="tags-item">菜式丰富</text>
-    <text class="tags-item">价格贵</text>
-    <text class="tags-item">分量足</text>
-    <text class="tags-item">干净卫生</text>
-    <text class="tags-item">干净卫生</text>
-    <text class="tags-item">干净卫生</text>
-    <text class="tags-item">干净卫生</text>
-  </scroll-view>
+    <scroll-view class="tags" scroll-x="{{true}}">
+      <text class="tags-item">味道好</text>
+      <text class="tags-item">座位多</text>
+      <text class="tags-item">菜式丰富</text>
+      <text class="tags-item">价格贵</text>
+      <text class="tags-item">分量足</text>
+      <text class="tags-item">干净卫生</text>
+      <text class="tags-item">干净卫生</text>
+      <text class="tags-item">干净卫生</text>
+      <text class="tags-item">干净卫生</text>
+    </scroll-view>
+  </view>
   <view class="comment">
     <view class="comment-header">
       <image class="comment-header-icon" src="../../assets/icons/comment.png" />
       <text>最新评论</text>
       <text>最热评论</text>
     </view>
-    <view class="comment-item" wx:for="{{comment}}">
+    <view class="comment-item" wx:for="{{comment}}" bindtap="goToCommentDetail" data-avatarurl="{{item.avatar_url}}" data-nickname="{{item.nickname}}" data-shopid="{{item.shop_id}}" data-commentid="{{item.comment_id}}" data-text="{{item.text}}" data->
       <view class="comment-item-avatar">
         <image src="{{item.avatar_url}}" />
       </view>

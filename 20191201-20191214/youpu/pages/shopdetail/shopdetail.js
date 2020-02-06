@@ -56,7 +56,7 @@ Page({
       }
     }
     else {
-      this.goAuthorize();
+      this.goToAuthorize();
     }
   },
   getShopInfo: function (shop_id) {
@@ -94,12 +94,18 @@ Page({
       });
     }
     else {
-      this.goAuthorize();
+      this.goToAuthorize();
     }
   },
-  goAuthorize: function () {
+  goToAuthorize: function () {
     wx.navigateTo({
       url: '../../pages/authorize/authorize'
+    });
+  },
+  goToCommentDetail: function (e) {
+    const { avatarurl, nickname, shopid, commentid, text } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../../pages/commentdetail/commentdetail?avatar_url=${avatarurl}&nickname=${nickname}&shop_id=${shopid}&comment_id=${commentid}&text=${text}&category=${this.data.curCategory}&subcategory=${this.data.curSub}`
     });
   },
   goback: function () {
