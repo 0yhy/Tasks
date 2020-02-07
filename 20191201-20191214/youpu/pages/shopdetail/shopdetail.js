@@ -3,7 +3,6 @@ let app = getApp();
 const initialData = {
   statusBarHeight: app.globalData.statusBarHeight,
   hostUrl: app.globalData.hostUrl,
-  token: wx.getStorageSync("token"),
   likeIcon: "../../assets/icons/love_empty.png",
   likedIcon: "../../assets/icons/love_solid.png",
   currentLikeIcon: false,
@@ -31,7 +30,7 @@ Page({
       if (!this.data.currentLikeIcon) {
         wx.request({
           url: `${this.data.hostUrl}/shop/like`,
-          header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+          header: { 'content-type': 'application/json', 'Authorization': `Bearer ${wx.getStorageSync("token")}` },
           data: { 'shop_id': this.data.shop.shop_id },
           method: 'POST',
           success: (result) => {
@@ -44,7 +43,7 @@ Page({
       else {
         wx.request({
           url: `${this.data.hostUrl}/shop/unlike`,
-          header: { 'content-type': 'application/json', 'Authorization': `Bearer ${this.data.token}` },
+          header: { 'content-type': 'application/json', 'Authorization': `Bearer ${wx.getStorageSync("token")}` },
           data: { 'shop_id': this.data.shop.shop_id },
           method: 'POST',
           success: (result) => {
@@ -106,6 +105,12 @@ Page({
     const { avatarurl, nickname, shopid, commentid, text } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `../../pages/commentdetail/commentdetail?avatar_url=${avatarurl}&nickname=${nickname}&shop_id=${shopid}&comment_id=${commentid}&text=${text}&category=${this.data.curCategory}&subcategory=${this.data.curSub}`
+    });
+  },
+  goToPersonalPage: function (e) {
+    const { openid } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../../pages/personalpage/personalpage?openid=${openid}`
     });
   },
   goback: function () {

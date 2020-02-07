@@ -4,7 +4,7 @@
   align-items: center;
   height: 250rpx;
   position: relative;
-  background-color: rgb(253, 150, 51);
+  background-color: rgb(253, 161, 50);
 }
 .title {
   font-family: PingFangSC-Semibold;

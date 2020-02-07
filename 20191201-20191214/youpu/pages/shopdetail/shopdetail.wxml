@@ -23,6 +23,7 @@
       <!-- <text>:{{shop.address}}</text> -->
       <text>:华中科技大学紫菘路</text>
     </view>
+    <!-- 图片栏 -->
     <scroll-view class="images" scroll-x="{{true}}">
       <image src="{{shop.image_url}}" />
     </scroll-view>
@@ -41,17 +42,20 @@
       <text class="tags-item">干净卫生</text>
     </scroll-view>
   </view>
+  <!-- 评论 -->
   <view class="comment">
+    <!-- 评论头 -->
     <view class="comment-header">
       <image class="comment-header-icon" src="../../assets/icons/comment.png" />
       <text>最新评论</text>
       <text>最热评论</text>
     </view>
-    <view class="comment-item" wx:for="{{comment}}" bindtap="goToCommentDetail" data-avatarurl="{{item.avatar_url}}" data-nickname="{{item.nickname}}" data-shopid="{{item.shop_id}}" data-commentid="{{item.comment_id}}" data-text="{{item.text}}" data->
-      <view class="comment-item-avatar">
+    <!-- 评论项 -->
+    <view class="comment-item" wx:for="{{comment}}">
+      <view class="comment-item-avatar" bindtap="goToPersonalPage" data-openid="{{item.openid}}">
         <image src="{{item.avatar_url}}" />
       </view>
-      <view class="comment-item-content">
+      <view class="comment-item-content" bindtap="goToCommentDetail" data-avatarurl="{{item.avatar_url}}" data-nickname="{{item.nickname}}" data-shopid="{{item.shop_id}}" data-commentid="{{item.comment_id}}" data-text="{{item.text}}">
         <text class="comment-item-content-nickname">{{item.nickname}}</text>
         <text class="comment-item-content-text">{{item.text}}</text>
       </view>

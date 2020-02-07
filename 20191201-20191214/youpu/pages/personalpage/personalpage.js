@@ -1,25 +1,38 @@
 const app = getApp();
 
-const initialData = {
-  hostUrl: app.globalData.hostUrl,
+const initalData = {
   statusBarHeight: app.globalData.statusBarHeight,
-  comments: undefined,
+  hostUrl: app.globalData.hostUrl,
+  homeBackground: "../../assets/mine_background.png",
+  likeIcon: "../../assets/icons/love_empty.png",
+  likedIcon: "../../assets/icons/love_solid.png",
   curLikeIcons: [],
-  curLikeCounts: [],
-  likedIcon: "../../assets/icons/icon-like.png",
-  likeIcon: "../../assets/icons/icon-like-nor.png"
+  curLikeCounts: []
 };
 
 Page({
-  data: initialData,
-  onLoad: function () {
-    this.getUserComment();
-    console.log(this.data)
+  data: initalData,
+  onLoad: function (option) {
+    const { openid } = option;
+    this.getUserInfo(openid);
+    this.getUserComment(openid);
   },
-  getUserComment: function () {
-    console.log(wx.getStorageSync("token"))
+  getUserInfo: function (openid) {
     wx.request({
-      url: `${this.data.hostUrl}/comment/user`,
+      url: `${this.data.hostUrl}/user/info?openid=${openid}`,
+      header: { 'content-type': 'application/json', 'Authorization': `Bearer ${wx.getStorageSync("token")}` },
+      success: (result) => {
+        console.log(result.data.data);
+        this.setData({ userInfo: result.data.data });
+      },
+      fail: (err) => {
+        console.log(err);
+      }
+    });
+  },
+  getUserComment: function (openid) {
+    wx.request({
+      url: `${this.data.hostUrl}/comment/user?openid=${openid}`,
       header: { 'content-type': 'application/json', 'Authorization': `Bearer ${wx.getStorageSync("token")}` },
       success: (result) => {
         console.log(result.data.data);
@@ -44,15 +57,6 @@ Page({
         }
       }
     });
-  },
-  goToShopDetail: function (e) {
-    const shop_id = e.currenTarget.dataset.shopid;
-    // 由于在该页面获取不到subcategory和category，暂时无法写好
-    // 解决方案1： 在/shop/info接口中传来category & subcategory
-    // 解决方案2： 新增根据shop_id查询category & subcategory接口
-    // wx.navigateTo({
-    //   url: `../../pages/shopdetail/shopdetail?id=${this.data.shop_id}&subcategory=${this.data.subcategory}&category=${this.data.category}`
-    // });
   },
   goback: function () {
     wx.navigateBack({

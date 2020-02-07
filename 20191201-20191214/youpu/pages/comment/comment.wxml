@@ -22,7 +22,7 @@
 <view class="comment">
   <textarea class="comment-area" placeholder="{{placeholder}}" bindinput="inputComment"></textarea>
   <view class="comment-upload">
-    <image class="comment-upload-image" src="../../assets/icons/camera.png" />
+    <image class="comment-upload-image" src="../../assets/icons/camera.png" bindtap="chooseImage" />
   </view>
 </view>
 <view class="cost">

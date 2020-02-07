@@ -1,8 +1,15 @@
 <view class="header" style="height:{{statusBarHeight + 100}}rpx">
-  <text class="title" style="top:{{statusBarHeight + 30}}rpx">我的评论</text>
+  <text class="title" style="top:{{statusBarHeight + 30}}rpx">用户主页</text>
 </view>
 <image class="back" style="top:{{statusBarHeight + 45}}rpx" src="../../assets/icons/back.png" bindtap="goback" />
-<view class="comments" style="top:{{statusBarHeight + 100}}rpx">
+<view class="background" style="top:{{statusBarHeight}}rpx">
+  <view style="top:{{statusBarHeight + 150}}rpx" class="user">
+    <image class="avatar" src="{{userInfo.avatar_url}}" />
+    <text class="nickname">{{userInfo.nickname}}</text>
+  </view>
+  <image class="homebackground" src="{{homeBackground}}" />
+</view>
+<view class="comments" style="top:{{statusBarHeight + 430}}rpx">
   <!-- 评论部分 -->
   <view class="comment" wx:for="{{comments}}">
     <view class="comment-content">{{item.text}}</view>

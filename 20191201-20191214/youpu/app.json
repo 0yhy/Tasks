@@ -8,7 +8,8 @@
     "pages/comment/comment",
     "pages/authorize/authorize",
     "pages/mycomment/mycomment",
-    "pages/commentdetail/commentdetail"
+    "pages/commentdetail/commentdetail",
+    "pages/personalpage/personalpage"
   ],
   "window": {
     "navigationStyle": "custom"

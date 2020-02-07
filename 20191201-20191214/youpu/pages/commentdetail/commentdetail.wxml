@@ -10,11 +10,11 @@
   </view>
   <view class="userinfo-text">{{commentText}}</view>
 </view>
-<view class="shopinfo" bindtap="goToShopDetail">
+<view class="shopinfo">
   <view class="shopinfo-avatar">
     <image class="shopinfo-avatar-image" src="{{shopInfo.image_url}}" />
   </view>
-  <view class="shopinfo-content">
+  <view class="shopinfo-content" bindtap="goToShopDetail">
     <!-- <view class="shopinfo-content-title">{{shopInfo.name}}</view> -->
     <view class="shopinfo-content-title">品三锅</view>
     <view class="shopinfo-content-location">

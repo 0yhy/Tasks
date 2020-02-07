@@ -4,18 +4,26 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
 		"coverView": true,
+		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.4",
+	"libVersion": "2.10.1",
 	"appid": "wxc8fe98348817dcb4",
 	"projectname": "youpu",
 	"debugOptions": {
@@ -95,6 +103,13 @@
 					"name": "pages/commentdetail/commentdetail",
 					"pathName": "pages/commentdetail/commentdetail",
 					"query": "avatar_url=https://wx.qlogo.cn/mmopen/vi_32/VvvfhTlIHwT9EHBraOAZCia9aesgrxibibiaeJ7dJj9W2hncicWyezofx30P102Br5uYpibXKzY9hbgXRLDBEa9Brwaw/132&nickname=Shaw&comment_id=5e3ac23343c1cf0001ce8a80&text= shoptest1第四条评论啦啦啦啦啦啦啦啦啦啦啦辣啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊&shop_id=5df49dfab4192c0001458bab&sub=5df49dc5b4192c0001458ba9&category=1",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "pages/personalpage/personalpage",
+					"pathName": "pages/personalpage/personalpage",
+					"query": "openid=oqZH25TVpvk5a9uRy5RJdzRWwGUg",
 					"scene": null
 				}
 			]

@@ -6,7 +6,7 @@ page {
   flex-direction: column;
   align-items: center;
   position: relative;
-  background-color: rgb(253, 150, 51);
+  background-color: rgb(253, 161, 50);
 }
 .title {
   font-family: PingFangSC-Semibold;
